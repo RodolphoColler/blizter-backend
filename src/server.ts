@@ -3,6 +3,6 @@ import app from './app';
 
 dotenv.config();
 
-const server = app.listen(() => console.log(`Online on ${process.env.PORT}`));
+const server = app.listen(process.env.PORT, () => console.log(`Online on ${process.env.PORT}`));
 
 export default server;
