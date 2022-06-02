@@ -3,7 +3,6 @@ import * as service from '../services/userService';
 
 enum errors {
   'User already exist.' = 400,
-  'It\'s not possible crete your user.' = 400,
 }
 
 export async function create(req: Request, res: Response) {

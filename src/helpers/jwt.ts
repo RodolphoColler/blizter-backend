@@ -6,6 +6,6 @@ const { JWT_SECRET } = process.env;
 
 const jwtConfig = { expiresIn: '7d' };
 
-export function jwtToken(user: { id: number, name: string }) {
-  return jwt.sign(user, JWT_SECRET || '', jwtConfig);
+export function jwtToken(id: number) {
+  return jwt.sign({ id }, JWT_SECRET || '', jwtConfig);
 }
