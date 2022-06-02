@@ -3,7 +3,7 @@ import * as sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp = require('chai-http');
 import { Request, Response } from 'express';
-import validateUser from '../../middlewares/validateUser';
+import validateUser from '../../../middlewares/validateUser';
 
 chai.use(chaiHttp);
 
