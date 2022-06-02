@@ -2,8 +2,8 @@ import { Response, Request } from 'express';
 import * as service from '../services/userService';
 
 enum errors {
-  'user already exist' = 400,
-  'It\'s not possible crete your user' = 400,
+  'User already exist.' = 400,
+  'It\'s not possible crete your user.' = 400,
 }
 
 export async function create(req: Request, res: Response) {
@@ -18,6 +18,6 @@ export async function create(req: Request, res: Response) {
 
     if (message in errors) return res.status(Number(errors[message])).json({ message });
 
-    return res.status(500).json({ message: error });
+    return res.status(500).json({ message: 'Inside server error.' });
   }
 }

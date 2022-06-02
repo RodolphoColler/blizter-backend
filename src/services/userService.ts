@@ -6,7 +6,7 @@ import { jwtToken } from '../helpers/jwt';
 export async function create({ email, password, name }: IUser) {
   const isUserExistent = await model.readOne(email);
 
-  if (isUserExistent) throw new Error('user already exist');
+  if (isUserExistent) throw new Error('User already exist.');
 
   const encryptedPassword = await bcrypt.hash(password, 10);
 
@@ -14,7 +14,7 @@ export async function create({ email, password, name }: IUser) {
 
   const user = await model.readOne(email);
 
-  if (!user) throw new Error('It\'s not possible crete your user');
+  if (!user) throw new Error('It\'s not possible crete your user.');
 
   const token = jwtToken(user);
 
