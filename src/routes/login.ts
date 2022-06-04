@@ -3,6 +3,6 @@ import * as controllers from '../controllers/loginController';
 
 const router = Router();
 
-router.get('/', controllers.validate);
+router.post('/', controllers.validate);
 
 export default router;

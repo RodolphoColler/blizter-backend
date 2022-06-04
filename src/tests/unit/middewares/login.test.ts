@@ -13,7 +13,7 @@ const request = {} as Request;
 const response = {} as Response;
 let next = () => {};
 
-describe.only('Test login middleware', () => {
+describe('Test login middleware', () => {
   describe('When email is invalid', () => {
     before(() => {
       next = sinon.stub();
