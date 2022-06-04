@@ -8,10 +8,7 @@ export async function create(user: IUser) {
 }
 
 export async function readOne(email: string) {
-  const user = await prisma.user.findUnique({
-    where: { email },
-    select: { id: true, name: true },
-  });
+  const user = await prisma.user.findUnique({ where: { email } });
 
   return user;
 }
