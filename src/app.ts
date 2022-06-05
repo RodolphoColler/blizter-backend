@@ -8,6 +8,7 @@ app.use(express.json());
 
 app.use(cors());
 
+app.use('/category', router.category);
 app.use('/login', router.login);
 app.use('/user', router.user);
 
