@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/RodolphoColler/blizter-backend#readme",
   "dependencies": {
+    "@joi/date": "^2.1.0",
     "@prisma/client": "^3.14.0",
     "@types/chai": "^4.3.1",
     "@types/express": "^4.17.13",
