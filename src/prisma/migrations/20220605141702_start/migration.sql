@@ -19,6 +19,7 @@ CREATE TABLE "Category" (
 -- CreateTable
 CREATE TABLE "Salary" (
     "id" SERIAL NOT NULL,
+    "salary" DOUBLE PRECISION NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "userId" INTEGER NOT NULL,
 

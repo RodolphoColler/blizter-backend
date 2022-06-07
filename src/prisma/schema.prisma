@@ -25,6 +25,7 @@ model Category {
 
 model Salary {
   id     Int        @id @default(autoincrement())
+  salary Float
   date   DateTime
   user   User       @relation(fields: [userId], references: [id])
   userId Int 
