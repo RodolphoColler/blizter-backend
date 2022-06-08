@@ -51,43 +51,6 @@ describe('Test expenditure middleware', () => {
       expect((next as sinon.SinonStub).called).to.be.equal(false);
     });
   });
-  describe('When userId is invalid', () => {
-    before(() => {
-      next = sinon.stub();
-      response.status = sinon.stub().returns(response);
-      response.json = sinon.stub();
-    });
-
-    it('When userId is not provided', () => {
-      request.body = { expenditure: 1, date: '', category: '' };
-
-      validateExpenditure(request, response, next);
-
-      expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
-      expect((response.json as sinon.SinonStub).calledWith({ message: '"userId" is required' })).to.be.equal(true);
-      expect((next as sinon.SinonStub).called).to.be.equal(false);
-    });
-
-    it('When userId is a string', () => {
-      request.body = { expenditure: 1, userId: 'string', date: '', category: '' };
-
-      validateExpenditure(request, response, next);
-
-      expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
-      expect((response.json as sinon.SinonStub).calledWith({ message: '"userId" must be a number' })).to.be.equal(true);
-      expect((next as sinon.SinonStub).called).to.be.equal(false);
-    });
-
-    it('When userId does not valid', () => {
-      request.body = { expenditure: 1, userId: 0, date: '', category: '' };
-
-      validateExpenditure(request, response, next);
-
-      expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
-      expect((response.json as sinon.SinonStub).calledWith({ message: '"userId" must be greater than or equal to 1' })).to.be.equal(true);
-      expect((next as sinon.SinonStub).called).to.be.equal(false);
-    });
-  });
   describe('When category is invalid', () => {
     before(() => {
       next = sinon.stub();
@@ -133,7 +96,7 @@ describe('Test expenditure middleware', () => {
     });
 
     it('When date is not provided', () => {
-      request.body = { expenditure: 1, userId: 1, category: '' };
+      request.body = { expenditure: 1, category: '' };
 
       validateExpenditure(request, response, next);
 
@@ -143,13 +106,27 @@ describe('Test expenditure middleware', () => {
     });
 
     it('When date does not valid', () => {
-      request.body = { expenditure: 1, userId: 1, date: 'DD-YYYY-MM', category: '' };
+      request.body = { expenditure: 1, date: 'DD-YYYY-MM', category: '' };
 
       validateExpenditure(request, response, next);
 
       expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
       expect((response.json as sinon.SinonStub).calledWith({ message: '"date" must be in YYYY-MM-DD format' })).to.be.equal(true);
       expect((next as sinon.SinonStub).called).to.be.equal(false);
+    });
+  });
+  describe('When expenditure is valid', () => {
+    before(() => {
+      next = sinon.stub();
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub();
+    });
+
+    it('Next function should be called', () => {
+      request.body = { expenditure: 1, category: 'Pet', date: '2022-12-01' };
+      validateExpenditure(request, response, next);
+
+      expect((next as sinon.SinonStub).called).to.be.equal(true);
     });
   });
 });
