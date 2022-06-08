@@ -3,8 +3,8 @@ import { ITokenPayload } from '../../interfaces/tokenInterface';
 
 declare global{
   namespace Express {
-      interface Request {
-          tokenPayload?: ITokenPayload
-      }
+    interface Request {
+      tokenPayload: ITokenPayload
+    }
   }
 }
