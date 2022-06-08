@@ -14,7 +14,7 @@ const request = {} as Request;
 const response = {} as Response;
 let next = () => {};
 
-describe.only('Test token middleware', () => {
+describe('Test token middleware', () => {
   describe('When token is invalid', () => {
     before(() => {
       next = sinon.stub();
