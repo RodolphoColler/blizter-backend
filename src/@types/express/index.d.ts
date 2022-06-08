@@ -1,10 +1,10 @@
-interface IToken {
-  id: number,
-  email: string,
-}
+import { Express } from 'express';
+import { ITokenPayload } from '../../interfaces/tokenInterface';
 
-declare namespace Express {
-  interface Request {
-      tokenPayload?: IToken;
+declare global{
+  namespace Express {
+      interface Request {
+          tokenPayload?: ITokenPayload
+      }
   }
 }
