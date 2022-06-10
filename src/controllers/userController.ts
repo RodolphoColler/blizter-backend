@@ -20,3 +20,16 @@ export async function create(req: Request, res: Response) {
     return res.status(500).json({ message: 'Inside server error.' });
   }
 }
+
+export async function updateCategory(req: Request, res: Response) {
+  try {
+    const { categoryId } = req.body;
+    const { id } = req.tokenPayload;
+
+    const createdCategory = await service.updateCategory(id, categoryId);
+
+    return res.status(200).json({ category: createdCategory });
+  } catch (error) {
+    return res.status(500).json({ message: 'Inside server error.' });
+  }
+}

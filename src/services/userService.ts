@@ -16,3 +16,9 @@ export async function create({ email, password, name }: IUser) {
 
   return token;
 }
+
+export async function updateCategory(id: number, categoryId: number) {
+  const createdCategory = await model.updateCategory(id, categoryId);
+
+  return createdCategory;
+}
