@@ -5,3 +5,9 @@ export async function read() {
 
   return categories;
 }
+
+export async function readOne(name: string) {
+  const categories = prisma.category.findUnique({ where: { name } });
+
+  return categories;
+}
