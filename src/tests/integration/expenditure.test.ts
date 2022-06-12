@@ -57,8 +57,6 @@ describe('Integration test expenditure', () => {
         .send(data.expenditure)
         .set({ authorization: token });
 
-      console.log(message);
-
       expect(status).to.be.equal(400);
       expect(message).to.be.equal('Category not existent.');
     });

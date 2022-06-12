@@ -31,10 +31,7 @@ export async function updateCategory(req: Request, res: Response) {
 
     return res.status(200).json({ category: createdCategory });
   } catch (error: any) {
-    const { message } = error;
-
-    console.log(error);
-    
+    const { message } = error;   
 
     if (message in errors) return res.status(Number(errors[message])).json({ message });
 
