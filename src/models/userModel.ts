@@ -17,10 +17,10 @@ export async function updateCategory(id: number, categoryId: number) {
   const { categories } = await prisma.user.update({
     where: { id },
     data: {
-      categories: { set: { id: categoryId } },
+      categories: { connect: { id: categoryId } },
     },
     select: { categories: true },
   });
 
-  return categories[0];
+  return categories[categories.length - 1];
 }
