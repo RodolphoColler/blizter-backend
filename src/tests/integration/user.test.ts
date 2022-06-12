@@ -6,6 +6,7 @@ import { after } from 'mocha';
 import app from '../../app';
 import { prisma } from '../../models/prisma';
 import * as data from '../testData/userData';
+import { jwtToken } from '../../helpers/jwt';
 
 chai.use(chaiHttp);
 
@@ -52,6 +53,52 @@ describe('Integration test user', () => {
 
       expect(status).to.be.equal(400);
       expect(message).to.be.equal('User already exist.');
+    });
+  });
+  describe('Test post /user/category route', () => {
+    after(() => { sinon.restore(); });
+    const token = jwtToken(1);
+    const category = { categoryId: 1 };
+
+    it('When everything goes well should the added category', async () => {
+      prisma.category.findUnique = sinon.stub().resolves(data.createdCategoryMock);
+
+      prisma.user.update = sinon.stub().resolves(data.createdCategoryDbMock);
+
+      const { status, body } = await chai
+        .request(app)
+        .post('/user/category')
+        .send(category)
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(200);
+      expect(body.category).to.be.deep.equal(data.createdCategoryMock);
+    });
+
+    it('When database returns an unexpected error', async () => {
+      prisma.category.findUnique = sinon.stub().throws('Inside server error');
+
+      const { status, body: { message } } = await chai
+        .request(app)
+        .post('/user/category')
+        .send(category)
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(500);
+      expect(message).to.be.equal('Inside server error.');
+    });
+
+    it('When services returns an error', async () => {
+      prisma.category.findUnique = sinon.stub().resolves(null);
+
+      const { status, body: { message } } = await chai
+        .request(app)
+        .post('/user/category')
+        .send(category)
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(400);
+      expect(message).to.be.equal('Category not existent.');
     });
   });
 });

@@ -4,7 +4,9 @@ import chai from 'chai';
 import chaiHttp = require('chai-http');
 import * as service from '../../../services/userService';
 import * as model from '../../../models/userModel';
+import * as categoryModel from '../../../models/categoryModel';
 import * as data from '../../testData/userData';
+import * as categoryData from '../../testData/categoryData';
 
 chai.use(chaiHttp);
 
@@ -30,6 +32,28 @@ describe('Test user services', () => {
       const token = await service.create(data.user);
 
       expect(token).to.be.a('string');
+    });
+  });
+  describe('Test updateCategory service', () => {
+    afterEach(() => { sinon.restore(); });
+
+    it('When everything goes well', async () => {
+      sinon.stub(categoryModel, 'readById').resolves(categoryData.category);
+      sinon.stub(model, 'updateCategory').resolves(data.createdCategoryMock);
+
+      const category = await service.updateCategory(1, 1);
+
+      expect(category).to.be.deep.equal(data.createdCategoryMock);
+    });
+
+    it('When the category not exists', async () => {
+      sinon.stub(categoryModel, 'readById').resolves(null);
+
+      try {
+        await service.updateCategory(1, 1);
+      } catch ({ message }) {
+        expect(message).to.be.equal('Category not existent.');
+      }
     });
   });
 });

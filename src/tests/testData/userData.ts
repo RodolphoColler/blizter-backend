@@ -10,3 +10,17 @@ export const user = {
   password: '1234567',
   name: 'name',
 };
+
+export const createdCategoryMock = {
+  id: 1,
+  name: 'Pet',
+};
+
+export const createdCategoryDbMock = {
+  categories: [
+    {
+      id: 1,
+      name: 'Pet',
+    },
+  ],
+};
