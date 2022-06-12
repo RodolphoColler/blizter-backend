@@ -3,6 +3,7 @@ import * as service from '../services/userService';
 
 enum errors {
   'User already exist.' = 400,
+  'Category not existent.' = 400,
 }
 
 export async function create(req: Request, res: Response) {
@@ -29,7 +30,14 @@ export async function updateCategory(req: Request, res: Response) {
     const createdCategory = await service.updateCategory(id, categoryId);
 
     return res.status(200).json({ category: createdCategory });
-  } catch (error) {
+  } catch (error: any) {
+    const { message } = error;
+
+    console.log(error);
+    
+
+    if (message in errors) return res.status(Number(errors[message])).json({ message });
+
     return res.status(500).json({ message: 'Inside server error.' });
   }
 }
