@@ -22,4 +22,18 @@ describe('Test category models', () => {
       expect(category).to.be.deep.equal(undefined);
     });
   });
+  describe('Test readOne method', () => {
+    it('When categories is founded', async () => {
+      prisma.category.findUnique = sinon.stub().resolves(data.category);
+
+      const category = await model.readOne('category');
+      expect(category).to.be.deep.equal(data.category);
+    });
+    it('When the category is not founded', async () => {
+      prisma.category.findUnique = sinon.stub().resolves(undefined);
+
+      const category = await model.readOne('category');
+      expect(category).to.be.deep.equal(undefined);
+    });
+  });
 });
