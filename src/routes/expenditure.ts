@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/expenditureController';
-import validateExpenditure from '../middlewares/validateExpenditure';
+import * as middlewares from '../middlewares/validateExpenditure';
 import validateToken from '../middlewares/validateToken';
 
 const router = Router();
 
-router.post('/', validateExpenditure, validateToken, controllers.create);
+router.get('/:id', middlewares.read, validateToken, controllers.read);
+
+router.post('/', middlewares.create, validateToken, controllers.create);
 
 export default router;

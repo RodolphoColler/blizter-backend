@@ -4,3 +4,9 @@ export interface IExpenditure {
   date: string,
   category: string
 }
+
+export interface IQueryExpenditure {
+  category: string,
+  id: number,
+  date: string
+}

@@ -1,4 +1,4 @@
-import { IExpenditure } from '../interfaces/expenditureInterface';
+import { IExpenditure, IQueryExpenditure } from '../interfaces/expenditureInterface';
 import { prisma } from './prisma';
 
 export async function create({ expenditure, userId, date, category }: IExpenditure) {
@@ -12,4 +12,21 @@ export async function create({ expenditure, userId, date, category }: IExpenditu
   });
 
   return createdExpenditure;
+}
+
+export async function read({ id, category, date }: IQueryExpenditure) {
+  const [year, month, day] = date.split('-');
+
+  const expenditures = await prisma.expenditure.findMany({
+    where: {
+      userId: id,
+      category,
+      date: {
+        gte: new Date(`${year}-${month}-01`),
+        lte: new Date(`${year}-${month}-${day}`),
+      },
+    },
+  });
+
+  return expenditures;
 }
