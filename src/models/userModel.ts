@@ -20,7 +20,7 @@ export async function readOneById(id: number) {
 }
 
 export async function updateCategory(id: number, categoryId: number) {
-  const { categories } = await prisma.user.update({
+  const categories = await prisma.user.update({
     where: { id },
     data: {
       categories: { connect: { id: categoryId } },
@@ -28,7 +28,7 @@ export async function updateCategory(id: number, categoryId: number) {
     select: { categories: true },
   });
 
-  return categories[categories.length - 1];
+  return categories;
 }
 
 export async function readCategory(id: number) {

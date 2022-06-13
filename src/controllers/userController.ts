@@ -26,11 +26,11 @@ export async function create(req: Request, res: Response) {
 export async function updateCategory(req: Request, res: Response) {
   try {
     const { categoryId } = req.body;
-    const { id } = req.tokenPayload;
+    const { id } = req.params;
 
-    const createdCategory = await service.updateCategory(id, categoryId);
+    const categories = await service.updateCategory(Number(id), categoryId);
 
-    return res.status(200).json({ category: createdCategory });
+    return res.status(200).json(categories);
   } catch (error: any) {
     const { message } = error;   
 

@@ -23,9 +23,9 @@ export async function updateCategory(id: number, categoryId: number) {
 
   if (!isCategoryExistent) throw new Error('Category not existent.');
 
-  const createdCategory = await model.updateCategory(id, categoryId);
+  const categories = await model.updateCategory(id, categoryId);
 
-  return createdCategory;
+  return categories;
 }
 
 export async function readCategory(id: number) {
