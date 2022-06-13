@@ -16,11 +16,9 @@ export const createdCategoryMock = {
   name: 'Pet',
 };
 
-export const createdCategoryDbMock = {
-  categories: [
-    {
-      id: 1,
-      name: 'Pet',
-    },
-  ],
-};
+export const createdCategoryDbMock = [
+  {
+    id: 1,
+    name: 'Pet',
+  },
+];

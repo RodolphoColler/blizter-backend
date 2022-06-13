@@ -39,11 +39,11 @@ describe('Test user services', () => {
 
     it('When everything goes well', async () => {
       sinon.stub(categoryModel, 'readById').resolves(categoryData.category);
-      sinon.stub(model, 'updateCategory').resolves(data.createdCategoryMock);
+      sinon.stub(model, 'updateCategory').resolves(data.createdCategoryDbMock as never);
 
       const category = await service.updateCategory(1, 1);
 
-      expect(category).to.be.deep.equal(data.createdCategoryMock);
+      expect(category).to.be.deep.equal(data.createdCategoryDbMock);
     });
 
     it('When the category not exists', async () => {

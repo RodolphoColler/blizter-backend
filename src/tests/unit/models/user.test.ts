@@ -26,10 +26,10 @@ describe('Test user models', () => {
 
       const createdCategory = await model.updateCategory(1, 1);
 
-      expect(createdCategory).to.be.deep.equal(data.createdCategoryMock);
+      expect(createdCategory).to.be.deep.equal(data.createdCategoryDbMock);
     });
     it('When the user category is not updated', async () => {
-      prisma.user.update = sinon.stub().resolves({ categories: [null] });
+      prisma.user.update = sinon.stub().resolves(null);
 
       const createdCategory = await model.updateCategory(1, 1);
 

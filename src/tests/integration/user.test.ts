@@ -57,7 +57,7 @@ describe('Integration test user', () => {
       expect(message).to.be.equal('User already exist.');
     });
   });
-  describe('Test post /user/category route', () => {
+  describe('Test patch /user/category route', () => {
     after(() => { sinon.restore(); });
     const token = jwtToken(1);
     const category = { categoryId: 1 };
@@ -69,12 +69,12 @@ describe('Integration test user', () => {
 
       const { status, body } = await chai
         .request(app)
-        .post('/user/category')
+        .patch('/user/category/1')
         .send(category)
         .set({ authorization: token });
 
       expect(status).to.be.equal(200);
-      expect(body.category).to.be.deep.equal(data.createdCategoryMock);
+      expect(body).to.be.deep.equal(data.createdCategoryDbMock);
     });
 
     it('When database returns an unexpected error', async () => {
@@ -82,7 +82,7 @@ describe('Integration test user', () => {
 
       const { status, body: { message } } = await chai
         .request(app)
-        .post('/user/category')
+        .patch('/user/category/1')
         .send(category)
         .set({ authorization: token });
 
@@ -95,7 +95,7 @@ describe('Integration test user', () => {
 
       const { status, body: { message } } = await chai
         .request(app)
-        .post('/user/category')
+        .patch('/user/category/1')
         .send(category)
         .set({ authorization: token });
 
