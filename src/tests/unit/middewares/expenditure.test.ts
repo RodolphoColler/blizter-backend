@@ -13,7 +13,7 @@ const request = {} as Request;
 const response = {} as Response;
 let next = () => {};
 
-describe.only('Test expenditure middleware', () => {
+describe('Test expenditure middleware', () => {
   describe('Test middleware to /post expenditure', () => {
     describe('When expenditure is invalid', () => {
       before(() => {
