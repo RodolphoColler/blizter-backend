@@ -24,4 +24,20 @@ describe('Test expenditure models', () => {
       }
     });
   });
+  describe('Test read method', () => {
+    it('When expenditure is returned', async () => {
+      prisma.expenditure.findMany = sinon.stub().resolves(data.expenditures);
+
+      const expenditure = await model.read(data.queryExpenditure);
+      expect(expenditure).to.be.deep.equal(data.expenditures);
+    });
+    it('When the an error is returned', async () => {
+      prisma.expenditure.findMany = sinon.stub().throws(new Error('error'));
+      try {
+        await model.read(data.queryExpenditure);
+      } catch ({ message }) {
+        expect(message).to.be.deep.equal('error');
+      }
+    });
+  });
 });
