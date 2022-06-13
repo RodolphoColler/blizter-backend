@@ -13,6 +13,12 @@ export async function readOne(email: string) {
   return user;
 }
 
+export async function readOneById(id: number) {
+  const user = await prisma.user.findUnique({ where: { id } });
+
+  return user;
+}
+
 export async function updateCategory(id: number, categoryId: number) {
   const { categories } = await prisma.user.update({
     where: { id },
@@ -23,4 +29,10 @@ export async function updateCategory(id: number, categoryId: number) {
   });
 
   return categories[categories.length - 1];
+}
+
+export async function readCategory(id: number) {
+  const categories = await prisma.user.findUnique({ where: { id }, select: { categories: true } });
+
+  return categories;
 }

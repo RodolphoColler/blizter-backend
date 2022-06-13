@@ -9,4 +9,6 @@ router.post('/category', validateToken, controller.updateCategory);
 
 router.post('/', validateUser, controller.create);
 
+router.get('/category/:id', validateToken, controller.readCategory);
+
 export default router;

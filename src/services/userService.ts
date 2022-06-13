@@ -27,3 +27,15 @@ export async function updateCategory(id: number, categoryId: number) {
 
   return createdCategory;
 }
+
+export async function readCategory(id: number) {
+  const isUserExistent = await model.readOneById(id);
+
+  if (!isUserExistent) throw new Error('User not exists.');
+
+  const categories = await model.readCategory(id);
+
+  if (!categories) return { categories: [] };
+
+  return categories;
+}
