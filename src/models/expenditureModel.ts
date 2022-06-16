@@ -31,3 +31,15 @@ export async function read({ id, category, date }: IQueryExpenditure) {
 
   return expenditures;
 }
+
+export async function deleteOne(id: number) {
+  const expenditure = await prisma.expenditure.delete({ where: { id } });
+
+  return expenditure;
+}
+
+export async function readOne(id: number) {
+  const deletedExpenditure = await prisma.expenditure.findUnique({ where: { id } });
+
+  return deletedExpenditure;
+}

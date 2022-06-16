@@ -9,4 +9,6 @@ router.get('/:id', middlewares.read, validateToken, controllers.read);
 
 router.post('/', middlewares.create, validateToken, controllers.create);
 
+router.delete('/:id', controllers.deleteOne);
+
 export default router;

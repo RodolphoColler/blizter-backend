@@ -13,6 +13,16 @@ export async function create(expenditure: IExpenditure) {
   return createdExpenditure;
 }
 
+export async function deleteOne(id: number) {
+  const isExpenditureExistent = await model.readOne(id);
+
+  if (!isExpenditureExistent) throw new Error('Expenditure not existent.');
+
+  const deletedExpenditure = await model.deleteOne(id);
+
+  return deletedExpenditure;
+}
+
 export async function read({ id, category, date }: IQueryExpenditure) {
   const isUserExistent = await userModel.readOneById(id);
 
