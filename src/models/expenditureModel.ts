@@ -1,13 +1,14 @@
 import { IExpenditure, IQueryExpenditure } from '../interfaces/expenditureInterface';
 import { prisma } from './prisma';
 
-export async function create({ expenditure, userId, date, category }: IExpenditure) {
+export async function create({ value, userId, date, category, description }: IExpenditure) {
   const createdExpenditure = await prisma.expenditure.create({
     data: {
-      expenditure,
+      value,
       user: { connect: { id: userId } },
       date: new Date(date),
       category,
+      description,
     },
   });
 

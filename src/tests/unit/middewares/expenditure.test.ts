@@ -22,33 +22,33 @@ describe('Test expenditure middleware', () => {
         response.json = sinon.stub();
       });
 
-      it('When expenditure is not provided', () => {
+      it('When value is not provided', () => {
         request.body = { userId: '', date: '', category: '' };
 
         middlewares.create(request, response, next);
 
         expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
-        expect((response.json as sinon.SinonStub).calledWith({ message: '"expenditure" is required' })).to.be.equal(true);
+        expect((response.json as sinon.SinonStub).calledWith({ message: '"value" is required' })).to.be.equal(true);
         expect((next as sinon.SinonStub).called).to.be.equal(false);
       });
 
-      it('When expenditure is a string', () => {
-        request.body = { expenditure: 'string', userId: '', date: '', category: '' };
+      it('When value is a string', () => {
+        request.body = { value: 'string', userId: '', date: '', category: '' };
 
         middlewares.create(request, response, next);
 
         expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
-        expect((response.json as sinon.SinonStub).calledWith({ message: '"expenditure" must be a number' })).to.be.equal(true);
+        expect((response.json as sinon.SinonStub).calledWith({ message: '"value" must be a number' })).to.be.equal(true);
         expect((next as sinon.SinonStub).called).to.be.equal(false);
       });
 
-      it('When expenditure does not valid', () => {
-        request.body = { expenditure: 0, userId: '', date: '', category: '' };
+      it('When value does not valid', () => {
+        request.body = { value: 0, userId: '', date: '', category: '' };
 
         middlewares.create(request, response, next);
 
         expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
-        expect((response.json as sinon.SinonStub).calledWith({ message: '"expenditure" must be greater than or equal to 1' })).to.be.equal(true);
+        expect((response.json as sinon.SinonStub).calledWith({ message: '"value" must be greater than or equal to 1' })).to.be.equal(true);
         expect((next as sinon.SinonStub).called).to.be.equal(false);
       });
     });
@@ -60,7 +60,7 @@ describe('Test expenditure middleware', () => {
       });
 
       it('When category is not provided', () => {
-        request.body = { expenditure: 1, userId: 1, date: '2022-12-01' };
+        request.body = { value: 1, userId: 1, date: '2022-12-01' };
 
         middlewares.create(request, response, next);
 
@@ -70,7 +70,7 @@ describe('Test expenditure middleware', () => {
       });
 
       it('When category is empty', () => {
-        request.body = { expenditure: 1, userId: 1, date: '2022-12-01', category: '' };
+        request.body = { value: 1, userId: 1, date: '2022-12-01', category: '' };
 
         middlewares.create(request, response, next);
 
@@ -80,12 +80,49 @@ describe('Test expenditure middleware', () => {
       });
 
       it('When category is a number', () => {
-        request.body = { expenditure: 1, userId: 1, date: '2022-12-01', category: 0 };
+        request.body = { value: 1, userId: 1, date: '2022-12-01', category: 0 };
 
         middlewares.create(request, response, next);
 
         expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
         expect((response.json as sinon.SinonStub).calledWith({ message: '"category" must be a string' })).to.be.equal(true);
+        expect((next as sinon.SinonStub).called).to.be.equal(false);
+      });
+    });
+    describe('When description is invalid', () => {
+      before(() => {
+        next = sinon.stub();
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub();
+      });
+
+      it('When description is not provided', () => {
+        request.body = { value: 1, userId: 1, category: 'Pet', date: '2022-12-01' };
+
+        middlewares.create(request, response, next);
+
+        expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
+        expect((response.json as sinon.SinonStub).calledWith({ message: '"description" is required' })).to.be.equal(true);
+        expect((next as sinon.SinonStub).called).to.be.equal(false);
+      });
+
+      it('When description is empty', () => {
+        request.body = { value: 1, userId: 1, category: 'Pet', date: '2022-12-01', description: '' };
+
+        middlewares.create(request, response, next);
+
+        expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
+        expect((response.json as sinon.SinonStub).calledWith({ message: '"description" is not allowed to be empty' })).to.be.equal(true);
+        expect((next as sinon.SinonStub).called).to.be.equal(false);
+      });
+
+      it('When description is a number', () => {
+        request.body = { value: 1, userId: 1, category: 'Pet', date: '2022-12-01', description: 0 };
+
+        middlewares.create(request, response, next);
+
+        expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
+        expect((response.json as sinon.SinonStub).calledWith({ message: '"description" must be a string' })).to.be.equal(true);
         expect((next as sinon.SinonStub).called).to.be.equal(false);
       });
     });
@@ -97,7 +134,7 @@ describe('Test expenditure middleware', () => {
       });
 
       it('When date is not provided', () => {
-        request.body = { expenditure: 1, category: '' };
+        request.body = { value: 1, category: '' };
 
         middlewares.create(request, response, next);
 
@@ -107,7 +144,7 @@ describe('Test expenditure middleware', () => {
       });
 
       it('When date does not valid', () => {
-        request.body = { expenditure: 1, date: 'DD-YYYY-MM', category: '' };
+        request.body = { value: 1, date: 'DD-YYYY-MM', category: '' };
 
         middlewares.create(request, response, next);
 
@@ -124,7 +161,7 @@ describe('Test expenditure middleware', () => {
       });
 
       it('Next function should be called', () => {
-        request.body = { expenditure: 1, category: 'Pet', date: '2022-12-01' };
+        request.body = { value: 1, category: 'Pet', date: '2022-12-01', description: 'Description' };
         middlewares.create(request, response, next);
 
         expect((next as sinon.SinonStub).called).to.be.equal(true);

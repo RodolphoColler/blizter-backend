@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import * as schemas from '../schemas/expenditureSchema';
 
 export function create(req: Request, res: Response, next: NextFunction) {
-  const { expenditure, date, category } = req.body;
+  const { value, date, category, description } = req.body;
 
-  const { error } = schemas.create.validate({ expenditure, date, category });
+  const { error } = schemas.create.validate({ value, date, category, description });
 
   if (error) return res.status(400).json({ message: error.message });
 

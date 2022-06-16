@@ -1,8 +1,9 @@
 export interface IExpenditure {
-  expenditure: number,
+  value: number,
   userId: number,
   date: string,
-  category: string
+  category: string,
+  description: string
 }
 
 export interface IQueryExpenditure {

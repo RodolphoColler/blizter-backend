@@ -9,10 +9,10 @@ enum errors {
 
 export async function create(req: Request, res: Response) {
   try {
-    const { expenditure, date, category } = req.body;
+    const { value, date, category, description } = req.body;
     const { id: userId } = req.tokenPayload;
 
-    const createdExpenditure = await service.create({ expenditure, userId, date, category });
+    const createdExpenditure = await service.create({ value, userId, date, category, description });
 
     return res.status(201).json({ expenditure: createdExpenditure });
   } catch (error: any) {
