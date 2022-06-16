@@ -19,7 +19,7 @@ CREATE TABLE "Category" (
 -- CreateTable
 CREATE TABLE "Salary" (
     "id" SERIAL NOT NULL,
-    "salary" DOUBLE PRECISION NOT NULL,
+    "value" DOUBLE PRECISION NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "userId" INTEGER NOT NULL,
 
@@ -29,7 +29,8 @@ CREATE TABLE "Salary" (
 -- CreateTable
 CREATE TABLE "Expenditure" (
     "id" SERIAL NOT NULL,
-    "expenditure" DOUBLE PRECISION NOT NULL,
+    "value" DOUBLE PRECISION NOT NULL,
+    "description" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "category" TEXT NOT NULL,
