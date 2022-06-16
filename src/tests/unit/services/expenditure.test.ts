@@ -67,4 +67,26 @@ describe('Test expenditure services', () => {
       }
     });
   });
+  describe('Test deleteOne service', () => {
+    afterEach(() => { sinon.restore(); });
+
+    it('When everything goes well', async () => {
+      sinon.stub(model, 'readOne').resolves(data.foundedExpenditure);
+      sinon.stub(model, 'deleteOne').resolves(data.foundedExpenditure);
+
+      const expenditure = await service.deleteOne(1);
+
+      expect(expenditure).to.be.deep.equal(data.foundedExpenditure);
+    });
+
+    it('When the expenditure not exist in database', async () => {
+      sinon.stub(model, 'readOne').resolves(undefined);
+
+      try {
+        await service.deleteOne(1);
+      } catch ({ message }) {
+        expect(message).to.be.equal('Expenditure not existent.');
+      }
+    });
+  });
 });

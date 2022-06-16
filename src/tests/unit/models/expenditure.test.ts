@@ -40,4 +40,36 @@ describe('Test expenditure models', () => {
       }
     });
   });
+  describe('Test readOne method', () => {
+    it('When expenditure is returned', async () => {
+      prisma.expenditure.findUnique = sinon.stub().resolves(data.foundedExpenditure);
+
+      const expenditure = await model.readOne(1);
+      expect(expenditure).to.be.deep.equal(data.foundedExpenditure);
+    });
+    it('When the an error is returned', async () => {
+      prisma.expenditure.findUnique = sinon.stub().throws(new Error('error'));
+      try {
+        await model.readOne(1);
+      } catch ({ message }) {
+        expect(message).to.be.deep.equal('error');
+      }
+    });
+  });
+  describe('Test deleteOne method', () => {
+    it('When expenditure is returned', async () => {
+      prisma.expenditure.delete = sinon.stub().resolves(data.foundedExpenditure);
+
+      const expenditure = await model.deleteOne(1);
+      expect(expenditure).to.be.deep.equal(data.foundedExpenditure);
+    });
+    it('When the an error is returned', async () => {
+      prisma.expenditure.delete = sinon.stub().throws(new Error('error'));
+      try {
+        await model.deleteOne(1);
+      } catch ({ message }) {
+        expect(message).to.be.deep.equal('error');
+      }
+    });
+  });
 });

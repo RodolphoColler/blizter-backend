@@ -31,3 +31,12 @@ export const queryExpenditure = {
   category: 'Education',
   date: '2022-06-08',
 };
+
+export const foundedExpenditure = {
+  id: 1,
+  value: 1,
+  userId: 1,
+  date: new Date('2022-06-08'),
+  category: 'Education',
+  description: 'Description',
+};

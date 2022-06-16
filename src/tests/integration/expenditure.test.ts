@@ -106,4 +106,48 @@ describe('Integration test expenditure', () => {
       expect(message).to.be.equal('User not exists.');
     });
   });
+  describe('Test expenditure delete/:id route', () => {
+    after(() => { sinon.restore(); });
+    const token = jwtToken(1);
+
+    it('When everything goes well should return the deleted expenditure', async () => {
+      // @ts-expect-error
+      delete data.foundedExpenditure.date;
+      prisma.expenditure.findUnique = sinon.stub().resolves(data.foundedExpenditure);
+      prisma.expenditure.delete = sinon.stub().resolves(data.foundedExpenditure);
+
+      const { status, body } = await chai
+        .request(app)
+        .delete('/expenditure/1')
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(200);
+      expect(body.expenditure).to.be.deep.equal(data.foundedExpenditure);
+    });
+
+    it('When database returns an unexpected error', async () => {
+      prisma.expenditure.findUnique = sinon.stub().resolves(data.foundedExpenditure);
+      prisma.expenditure.delete = sinon.stub().throws('Inside server error');
+
+      const { status, body: { message } } = await chai
+        .request(app)
+        .delete('/expenditure/1')
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(500);
+      expect(message).to.be.equal('Inside server error.');
+    });
+
+    it('When service returns an error', async () => {
+      prisma.expenditure.findUnique = sinon.stub().resolves(null);
+
+      const { status, body: { message } } = await chai
+        .request(app)
+        .delete('/expenditure/1')
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(400);
+      expect(message).to.be.equal('Expenditure not existent.');
+    });
+  });
 });
