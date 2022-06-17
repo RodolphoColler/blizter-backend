@@ -31,4 +31,35 @@ describe('Test salary services', () => {
       }
     });
   });
+  describe('Test readOne service', () => {
+    afterEach(() => { sinon.restore(); });
+
+    it('When everything goes well', async () => {
+      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
+      sinon.stub(model, 'readOne').resolves(data.salaryArrayMock);
+
+      const salary = await service.readOne(data.querySalary);
+
+      expect(salary).to.be.deep.equal(data.salaryArrayMock);
+    });
+    it('When the user not exist in database', async () => {
+      sinon.stub(userModel, 'readOneById').resolves(null);
+
+      try {
+        await service.readOne(data.createSalaryData);
+      } catch ({ message }) {
+        expect(message).to.be.equal('User not exists.');
+      }
+    });
+    it('When salary is not founded', async () => {
+      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
+      sinon.stub(model, 'readOne').resolves(undefined);
+
+      try {
+        await service.readOne(data.createSalaryData);
+      } catch ({ message }) {
+        expect(message).to.be.equal('Salary not exists.');
+      }
+    });
+  });
 });
