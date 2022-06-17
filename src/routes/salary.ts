@@ -7,4 +7,6 @@ const router = Router();
 
 router.post('/', middlewares.create, validateToken, controllers.create);
 
+router.get('/:id', middlewares.readOne, validateToken, controllers.readOne);
+
 export default router;
