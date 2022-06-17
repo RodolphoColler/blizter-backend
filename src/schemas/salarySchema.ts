@@ -7,3 +7,7 @@ export const create = Joi.object({
   value: Joi.number().min(1).required(),
   date: Joi.date().format('YYYY-MM-DD').required(),
 });
+
+export const readOne = Joi.object({
+  date: Joi.date().format('YYYY-MM-DD').required(),
+});
