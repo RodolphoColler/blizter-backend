@@ -62,4 +62,25 @@ describe('Test salary services', () => {
       }
     });
   });
+  describe('Test updateOne service', () => {
+    afterEach(() => { sinon.restore(); });
+
+    it('When everything goes well', async () => {
+      sinon.stub(model, 'readOneById').resolves(data.salaryMock);
+      sinon.stub(model, 'updateOne').resolves(data.salaryMock);
+
+      const salary = await service.updateOne(data.updateSalaryData);
+
+      expect(salary).to.be.deep.equal(data.salaryMock);
+    });
+    it('When the user not exist in database', async () => {
+      sinon.stub(model, 'readOneById').resolves(null);
+
+      try {
+        await service.updateOne(data.updateSalaryData);
+      } catch ({ message }) {
+        expect(message).to.be.equal('Salary not exists.');
+      }
+    });
+  });
 });

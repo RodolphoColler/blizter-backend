@@ -104,4 +104,50 @@ describe('Integration test salary', () => {
       expect(message).to.be.equal('User not exists.');
     });
   });
+  describe('Test salary get/:id route', () => {
+    after(() => { sinon.restore(); });
+    const token = jwtToken(1);
+
+    it('When everything goes well should return the new salary', async () => {
+      // @ts-expect-error
+      delete data.salaryMock.date;
+      prisma.salary.findUnique = sinon.stub().resolves(data.salaryMock);
+      prisma.salary.update = sinon.stub().resolves(data.salaryMock);
+
+      const { status, body } = await chai
+        .request(app)
+        .patch('/salary/1')
+        .send(data.updateSalaryData)
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(200);
+      expect(body.salary).to.be.deep.equal(data.salaryMock);
+    });
+
+    it('When database returns an unexpected error', async () => {
+      prisma.salary.findUnique = sinon.stub().throws('Inside server error');
+
+      const { status, body: { message } } = await chai
+        .request(app)
+        .patch('/salary/1')
+        .send(data.updateSalaryData)
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(500);
+      expect(message).to.be.equal('Inside server error.');
+    });
+
+    it('When service returns an error', async () => {
+      prisma.salary.findUnique = sinon.stub().resolves(null);
+
+      const { status, body: { message } } = await chai
+        .request(app)
+        .patch('/salary/1')
+        .send(data.updateSalaryData)
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(400);
+      expect(message).to.be.equal('Salary not exists.');
+    });
+  });
 });

@@ -29,3 +29,8 @@ export const querySalary = {
   userId: 1,
   date: '2022-06-08',
 };
+
+export const updateSalaryData = {
+  id: 1,
+  value: 5000,
+};

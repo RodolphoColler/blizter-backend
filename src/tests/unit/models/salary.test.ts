@@ -40,4 +40,34 @@ describe('Test salary models', () => {
       expect(salary).to.be.deep.equal(undefined);
     });
   });
+  describe('Test readOneById method', () => {
+    it('When salary is founded', async () => {
+      prisma.salary.findUnique = sinon.stub().resolves(data.salaryMock);
+
+      const salary = await model.readOneById(1);
+      expect(salary).to.be.deep.equal(data.salaryMock);
+    });
+    it('When the undefined is returned', async () => {
+      prisma.salary.findUnique = sinon.stub().resolves(undefined);
+
+      const salary = await model.readOneById(1);
+
+      expect(salary).to.be.deep.equal(undefined);
+    });
+  });
+  describe('Test updateOne method', () => {
+    it('When salary is founded', async () => {
+      prisma.salary.update = sinon.stub().resolves(data.salaryMock);
+
+      const salary = await model.updateOne(data.updateSalaryData);
+      expect(salary).to.be.deep.equal(data.salaryMock);
+    });
+    it('When the undefined is returned', async () => {
+      prisma.salary.update = sinon.stub().resolves(undefined);
+
+      const salary = await model.updateOne(data.updateSalaryData);
+
+      expect(salary).to.be.deep.equal(undefined);
+    });
+  });
 });
