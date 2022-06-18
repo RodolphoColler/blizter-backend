@@ -20,3 +20,13 @@ export function readOne(req: Request, res: Response, next: NextFunction) {
 
   return next();
 }
+
+export function updateOne(req: Request, res: Response, next: NextFunction) {
+  const { value } = req.body;
+
+  const { error } = schemas.updateOne.validate({ value });
+
+  if (error) return res.status(400).json({ message: error.message });
+
+  return next();
+}
