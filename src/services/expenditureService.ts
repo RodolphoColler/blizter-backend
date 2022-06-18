@@ -1,4 +1,4 @@
-import { IExpenditure, IQueryExpenditure } from '../interfaces/expenditureInterface';
+import { IExpenditure, IQueryExpenditure, IQueryMonthExpense } from '../interfaces/expenditureInterface';
 import * as model from '../models/expenditureModel';
 import * as categoryModel from '../models/categoryModel';
 import * as userModel from '../models/userModel';
@@ -35,4 +35,16 @@ export async function read({ id, category, date }: IQueryExpenditure) {
   const expenditures = await model.read({ id, category, date });
 
   return expenditures;
+}
+
+export async function readMonthExpense({ userId, date }: IQueryMonthExpense) {
+  const isUserExistent = await userModel.readOneById(userId);
+
+  if (!isUserExistent) throw new Error('User not exists.');
+
+  const { _sum } = await model.readMonthExpense({ userId, date });
+
+  if (!_sum.value) return { value: 0 };
+
+  return _sum;
 }

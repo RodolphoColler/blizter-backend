@@ -1,5 +1,5 @@
 import { Response, Request } from 'express';
-import { IQueryExpenditure } from '../interfaces/expenditureInterface';
+import { IQueryExpenditure, IQueryMonthExpense } from '../interfaces/expenditureInterface';
 import * as service from '../services/expenditureService';
 
 enum errors {
@@ -58,3 +58,23 @@ export async function read(req: Request, res: Response) {
     return res.status(500).json({ message: 'Inside server error.' });
   }
 }
+
+export async function readMonthExpense(req: Request, res: Response) {
+  try {
+    const { date} = req.query as unknown as IQueryMonthExpense;
+
+    const { id } = req.params;
+
+    const monthExpense = await service.readMonthExpense({ userId: Number(id), date});
+
+    return res.status(200).json({ monthExpense });
+  } catch (error: any) {
+    const { message } = error;
+
+    if (message in errors) return res.status(Number(errors[message])).json({ message });
+
+    return res.status(500).json({ message: 'Inside server error.' });
+  }
+}
+
+
