@@ -8,3 +8,8 @@ export interface IQuerySalary {
   userId: number,
   date: string
 }
+
+export interface ISalaryUpdate {
+  id: number,
+  value: number
+}

@@ -1,4 +1,4 @@
-import { IQuerySalary, ISalary } from '../interfaces/salaryInterface';
+import { IQuerySalary, ISalary, ISalaryUpdate } from '../interfaces/salaryInterface';
 import * as model from '../models/salaryModel';
 import * as userModel from '../models/userModel';
 
@@ -20,6 +20,16 @@ export async function readOne({ userId, date }: IQuerySalary) {
   const salary = await model.readOne({ userId, date });
 
   if (!salary) throw new Error('Salary not exists.');
+
+  return salary;
+}
+
+export async function updateOne({ id, value }: ISalaryUpdate) {
+  const isSalaryExistent = await model.readOneById(id);
+
+  if (!isSalaryExistent) throw new Error('Salary not exists.');
+
+  const salary = await model.updateOne({ id, value });
 
   return salary;
 }

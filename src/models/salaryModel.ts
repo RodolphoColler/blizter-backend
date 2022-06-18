@@ -1,4 +1,4 @@
-import { IQuerySalary, ISalary } from '../interfaces/salaryInterface';
+import { IQuerySalary, ISalary, ISalaryUpdate } from '../interfaces/salaryInterface';
 import { prisma } from './prisma';
 
 export async function create({ value, userId, date }: ISalary) {
@@ -24,6 +24,21 @@ export async function readOne({ userId, date }: IQuerySalary) {
         lte: new Date(`${year}-${month}-${day}`),
       },
     },
+  });
+
+  return salary;
+}
+
+export async function readOneById(id: number) {
+  const salary = await prisma.salary.findUnique({ where: { id } });
+
+  return salary;
+}
+
+export async function updateOne({ id, value }: ISalaryUpdate) {
+  const salary = await prisma.salary.update({
+    where: { id },
+    data: { value },
   });
 
   return salary;

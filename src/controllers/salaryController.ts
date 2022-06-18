@@ -40,3 +40,20 @@ export async function readOne(req: Request, res: Response) {
     return res.status(500).json({ message: 'Inside server error.' });
   }
 }
+
+export async function updateOne(req: Request, res: Response) {
+  try {
+    const { value } = req.body;
+    const { id } = req.params;
+
+    const salary = await service.updateOne({ id: Number(id), value });
+
+    return res.status(200).json({ salary });
+  } catch (error: any) {
+    const { message } = error;
+
+    if (message in errors) return res.status(Number(errors[message])).json({ message });
+
+    return res.status(500).json({ message: 'Inside server error.' });
+  }
+}
