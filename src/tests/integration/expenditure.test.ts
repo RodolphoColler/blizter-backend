@@ -150,4 +150,45 @@ describe('Integration test expenditure', () => {
       expect(message).to.be.equal('Expenditure not existent.');
     });
   });
+  describe('Test expenditure get/monthExpend/:id route', () => {
+    after(() => { sinon.restore(); });
+    const token = jwtToken(1);
+
+    it('When everything goes well should return all the expenditures', async () => {
+      prisma.user.findUnique = sinon.stub().resolves(userData.user);
+      prisma.expenditure.aggregate = sinon.stub().resolves(data.monthExpenseMock);
+
+      const { status, body } = await chai
+        .request(app)
+        .get('/expenditure/month/1?date=2022-06-30')
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(200);
+      expect(body.monthExpense).to.be.deep.equal(data.monthExpenseServiceResponse);
+    });
+
+    it('When database returns an unexpected error', async () => {
+      prisma.user.findUnique = sinon.stub().throws('Inside server error');
+
+      const { status, body: { message } } = await chai
+        .request(app)
+        .get('/expenditure/month/1?date=2022-06-30')
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(500);
+      expect(message).to.be.equal('Inside server error.');
+    });
+
+    it('When service returns an error', async () => {
+      prisma.user.findUnique = sinon.stub().resolves(null);
+
+      const { status, body: { message } } = await chai
+        .request(app)
+        .get('/expenditure/month/1/?date=2022-06-30')
+        .set({ authorization: token });
+
+      expect(status).to.be.equal(400);
+      expect(message).to.be.equal('User not exists.');
+    });
+  });
 });
