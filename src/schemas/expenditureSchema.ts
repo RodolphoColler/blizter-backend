@@ -14,3 +14,7 @@ export const read = Joi.object({
   date: Joi.date().format('YYYY-MM-DD').required(),
   category: Joi.string().empty().required(),
 });
+
+export const monthExpense = Joi.object({
+  date: Joi.date().format('YYYY-MM-DD').required(),
+});

@@ -20,3 +20,13 @@ export function read(req: Request, res: Response, next: NextFunction) {
 
   return next();
 }
+
+export function monthExpense(req: Request, res: Response, next: NextFunction) {
+  const { date } = req.query;
+
+  const { error } = schemas.monthExpense.validate({ date });
+
+  if (error) return res.status(400).json({ message: error.message });
+
+  return next();
+}
