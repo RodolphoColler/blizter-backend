@@ -40,6 +40,22 @@ describe('Test expenditure models', () => {
       }
     });
   });
+  describe('Test readMonthExpense method', () => {
+    it('When expense is returned', async () => {
+      prisma.expenditure.aggregate = sinon.stub().resolves(data.monthExpenseMock);
+
+      const expenditure = await model.readMonthExpense(data.queryMonthExpenditure);
+      expect(expenditure).to.be.deep.equal(data.monthExpenseMock);
+    });
+    it('When the an error is returned', async () => {
+      prisma.expenditure.aggregate = sinon.stub().throws(new Error('error'));
+      try {
+        await model.readMonthExpense(data.queryMonthExpenditure);
+      } catch ({ message }) {
+        expect(message).to.be.deep.equal('error');
+      }
+    });
+  });
   describe('Test readOne method', () => {
     it('When expenditure is returned', async () => {
       prisma.expenditure.findUnique = sinon.stub().resolves(data.foundedExpenditure);

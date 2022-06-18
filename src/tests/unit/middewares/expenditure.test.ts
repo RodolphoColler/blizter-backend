@@ -238,4 +238,47 @@ describe('Test expenditure middleware', () => {
       });
     });
   });
+  describe('Test middleware to /month/:id expenditure', () => {
+    describe('When date is invalid', () => {
+      before(() => {
+        next = sinon.stub();
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub();
+      });
+
+      it('When date is not provided', () => {
+        request.query = { };
+
+        middlewares.monthExpense(request, response, next);
+
+        expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
+        expect((response.json as sinon.SinonStub).calledWith({ message: '"date" is required' })).to.be.equal(true);
+        expect((next as sinon.SinonStub).called).to.be.equal(false);
+      });
+
+      it('When date does not valid', () => {
+        request.query = { date: 'DD-YYYY-MM' };
+
+        middlewares.monthExpense(request, response, next);
+
+        expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
+        expect((response.json as sinon.SinonStub).calledWith({ message: '"date" must be in YYYY-MM-DD format' })).to.be.equal(true);
+        expect((next as sinon.SinonStub).called).to.be.equal(false);
+      });
+    });
+    describe('When query is valid', () => {
+      before(() => {
+        next = sinon.stub();
+        response.status = sinon.stub().returns(response);
+        response.json = sinon.stub();
+      });
+
+      it('Next function should be called', () => {
+        request.query = { date: '2022-12-01' };
+        middlewares.create(request, response, next);
+
+        expect((next as sinon.SinonStub).called).to.be.equal(true);
+      });
+    });
+  });
 });

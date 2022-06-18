@@ -89,4 +89,35 @@ describe('Test expenditure services', () => {
       }
     });
   });
+  describe('Test readMonthExpense service', () => {
+    afterEach(() => { sinon.restore(); });
+
+    it('When everything goes well', async () => {
+      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
+      sinon.stub(model, 'readMonthExpense').resolves(data.monthExpenseMock);
+
+      const monthExpense = await service.readMonthExpense(data.queryMonthExpenditure);
+
+      expect(monthExpense).to.be.deep.equal(data.monthExpenseServiceResponse);
+    });
+
+    it('When the value is null', async () => {
+      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
+      sinon.stub(model, 'readMonthExpense').resolves(data.monthExpenseSumNullMock);
+
+      const monthExpense = await service.readMonthExpense(data.queryMonthExpenditure);
+
+      expect(monthExpense).to.be.deep.equal({ value: 0 });
+    });
+
+    it('When the user not exist in database', async () => {
+      sinon.stub(userModel, 'readOneById').resolves(null);
+
+      try {
+        await service.readMonthExpense(data.queryMonthExpenditure);
+      } catch ({ message }) {
+        expect(message).to.be.equal('User not exists.');
+      }
+    });
+  });
 });

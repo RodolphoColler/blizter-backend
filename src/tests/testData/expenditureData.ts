@@ -40,3 +40,24 @@ export const foundedExpenditure = {
   category: 'Education',
   description: 'Description',
 };
+
+export const monthExpenseMock = {
+  _sum: {
+    value: 1,
+  },
+};
+
+export const monthExpenseSumNullMock = {
+  _sum: {
+    value: null,
+  },
+};
+
+export const monthExpenseServiceResponse = {
+  value: 1,
+};
+
+export const queryMonthExpenditure = {
+  userId: 1,
+  date: '2022-06-08',
+};
