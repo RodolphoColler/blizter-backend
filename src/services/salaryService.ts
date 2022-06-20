@@ -17,7 +17,7 @@ export async function readOne({ userId, date }: IQuerySalary) {
 
   if (!isUserExistent) throw new Error('User not exists.');
 
-  const salary = await model.readOne({ userId, date });
+  const [salary] = await model.readOne({ userId, date });
 
   if (!salary) throw new Error('Salary not exists.');
 
