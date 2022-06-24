@@ -2,10 +2,12 @@
   "name": "blizter-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./build/server",
   "scripts": {
-    "test": "mocha -r ts-node/register src/tests/**/*.test.ts --exit -t 60000",
-    "start": "ts-node src/server.ts",
+    "build": "npx -y tsc",
+    "test": "mocha -r ts-node/register ./src/tests/*.{test,spec}.ts -t 10000 --exit",
+    "prestart": "npm run build",
+    "start": "node .",
     "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\""
   },
   "prisma": {
