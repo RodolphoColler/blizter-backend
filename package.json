@@ -2,7 +2,7 @@
   "name": "blizter-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "./build/",
+  "main": "./build/server.js",
   "scripts": {
     "build": "npx --package typescript tsc --init",
     "test": "mocha -r ts-node/register ./src/tests/*.{test,spec}.ts -t 10000 --exit",
