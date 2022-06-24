@@ -40,24 +40,26 @@ describe('Test salary services', () => {
 
       const salary = await service.readOne(data.querySalary);
 
-      expect(salary).to.be.deep.equal(data.salaryArrayMock);
+      expect(salary).to.be.deep.equal(data.salaryArrayMock[0]);
     });
     it('When the user not exist in database', async () => {
       sinon.stub(userModel, 'readOneById').resolves(null);
 
       try {
-        await service.readOne(data.createSalaryData);
+        await service.readOne(data.querySalary);
       } catch ({ message }) {
         expect(message).to.be.equal('User not exists.');
       }
     });
     it('When salary is not founded', async () => {
       sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
-      sinon.stub(model, 'readOne').resolves(undefined);
+      sinon.stub(model, 'readOne').resolves([]);
 
       try {
-        await service.readOne(data.createSalaryData);
+        await service.readOne(data.querySalary);
       } catch ({ message }) {
+        console.log(message);
+
         expect(message).to.be.equal('Salary not exists.');
       }
     });
