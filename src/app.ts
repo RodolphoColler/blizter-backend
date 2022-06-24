@@ -13,6 +13,6 @@ app.use('/category', router.category);
 app.use('/salary', router.salary);
 app.use('/login', router.login);
 app.use('/user', router.user);
-app.get('/token', router.token);
+app.use('/token', router.token);
 
 export default app;
