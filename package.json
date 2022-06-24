@@ -4,7 +4,7 @@
   "description": "",
   "main": "./build/server",
   "scripts": {
-    "build": "npx --package=typescript -- tsc",
+    "build": "npx --package typescript tsc --init",
     "test": "mocha -r ts-node/register ./src/tests/*.{test,spec}.ts -t 10000 --exit",
     "prestart": "npm run build",
     "start": "node .",
