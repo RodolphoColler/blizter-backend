@@ -58,8 +58,6 @@ describe('Test salary services', () => {
       try {
         await service.readOne(data.querySalary);
       } catch ({ message }) {
-        console.log(message);
-
         expect(message).to.be.equal('Salary not exists.');
       }
     });
