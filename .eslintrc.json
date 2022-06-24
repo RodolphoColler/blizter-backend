@@ -35,6 +35,7 @@
         "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "import/prefer-default-export": "off",
         "object-curly-newline": "off",
-        "linebreak-style": 0
+        "linebreak-style": 0,
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}]
     }
 }
