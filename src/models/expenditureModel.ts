@@ -44,12 +44,13 @@ export async function readOne(id: number) {
   return deletedExpenditure;
 }
 
-export async function readMonthExpense({ userId, date }: IQueryMonthExpense) {
+export async function readMonthExpense({ userId, date, category }: IQueryMonthExpense) {
   const [year, month, day] = date.split('-');
 
   const monthExpense = await prisma.expenditure.aggregate({
     where: {
       userId,
+      category,
       date: {
         gte: new Date(`${year}-${month}-01`),
         lte: new Date(`${year}-${month}-${day}`),

@@ -61,11 +61,11 @@ export async function read(req: Request, res: Response) {
 
 export async function readMonthExpense(req: Request, res: Response) {
   try {
-    const { date} = req.query as unknown as IQueryMonthExpense;
+    const { date, category } = req.query as unknown as IQueryMonthExpense;
 
     const { id } = req.params;
 
-    const monthExpense = await service.readMonthExpense({ userId: Number(id), date});
+    const monthExpense = await service.readMonthExpense({ userId: Number(id), date, category });    
 
     return res.status(200).json({ monthExpense });
   } catch (error: any) {

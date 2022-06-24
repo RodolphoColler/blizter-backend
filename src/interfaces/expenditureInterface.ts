@@ -15,4 +15,5 @@ export interface IQueryExpenditure {
 export interface IQueryMonthExpense {
   userId: number,
   date: string,
+  category?: string,
 }

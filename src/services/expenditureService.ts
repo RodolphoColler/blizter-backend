@@ -37,12 +37,12 @@ export async function read({ id, category, date }: IQueryExpenditure) {
   return expenditures;
 }
 
-export async function readMonthExpense({ userId, date }: IQueryMonthExpense) {
+export async function readMonthExpense({ userId, date, category }: IQueryMonthExpense) {
   const isUserExistent = await userModel.readOneById(userId);
 
   if (!isUserExistent) throw new Error('User not exists.');
 
-  const { _sum } = await model.readMonthExpense({ userId, date });
+  const { _sum } = await model.readMonthExpense({ userId, date, category });
 
   if (!_sum.value) return { value: 0 };
 
