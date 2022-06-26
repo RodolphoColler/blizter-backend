@@ -2,13 +2,14 @@
   "name": "blizter-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "./build/server",
+  "main": "./dist/server.js",
   "scripts": {
     "build": "npx --package typescript tsc --init",
     "test": "mocha -r ts-node/register ./src/tests/*.{test,spec}.ts -t 10000 --exit",
     "prestart": "npm run build",
-    "start": "node .",
-    "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\""
+    "start": "node build/server.js",
+    "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\"",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
