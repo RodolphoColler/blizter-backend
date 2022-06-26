@@ -6,7 +6,11 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors());
+const corsConfig = {
+  origin: ['http://localhost:3001', 'https://blizter.vercel.app'],
+};
+
+app.use(cors(corsConfig));
 
 app.use('/expenditure', router.expenditure);
 app.use('/category', router.category);
