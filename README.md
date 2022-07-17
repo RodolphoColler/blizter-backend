@@ -1,2 +1,52 @@
 # blizter
 
+<details open>
+<summary><h2>/user<h2></summary>
+
+## POST  api/user
+
+To create a new user
+
+```json
+{
+  "email": "test@gmail.com"
+  "password": "1234567"
+}
+```
+
+### Should return 
+
+Jwt token
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+}
+```
+
+## PATCH  api/user/category/:id
+
+Associate some category to respective user
+
+```json
+{
+  "categoryId": 1
+}
+```
+
+> Should send an authorization header with an valid token
+
+### Should return 
+
+Array with all categories that are associated with the respective user
+
+```json
+[
+  "Education", "Medical" ...
+]
+```
+
+
+
+
+</details>
