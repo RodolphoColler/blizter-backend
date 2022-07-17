@@ -36,6 +36,34 @@ Jwt token
 </details>
   
 <details>
+<summary><h2>GET  api/user/category/:id<h2></summary>
+
+> Should send an authorization header with an valid token
+
+### Should return 
+
+Array with all categories that are associated with the respective user
+
+```json
+[
+  "Education", "Medical" ...
+]
+```
+  
+<details>
+<summary><h3>Errors<h3></summary>
+ 
+> 400 - User not exists.
+  
+> 400 - Your request must have a token.
+  
+> 401 - Not valid token.
+
+</details>
+
+
+</details>
+<details>
 <summary><h2>PATCH  api/user/category/:id<h2></summary>
 
 Associate some category to respective user
@@ -59,6 +87,7 @@ Array with all categories that are associated with the respective user
 ```
   
 <details>
+ 
 <summary><h3>Errors<h3></summary>
  
 > 400 - User not exists.
@@ -70,5 +99,4 @@ Array with all categories that are associated with the respective user
 > 401 - Not valid token.
 
 </details>
-
-</details>
+</detials>
