@@ -32,7 +32,7 @@ export async function updateCategory(req: Request, res: Response) {
 
     return res.status(200).json(categories);
   } catch (error: any) {
-    const { message } = error;   
+    const { message } = error;
 
     if (message in errors) return res.status(Number(errors[message])).json({ message });
 
