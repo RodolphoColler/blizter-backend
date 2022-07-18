@@ -206,5 +206,77 @@ Array with the filtered expenditures
 
 </details>
 </details>
+  
+<details>
+<summary><h2>GET api/expenditure/month/:id?date&category<h2></summary>
+
+Sum of all expenditures with such a month and category
+
+> Example api/expenditure/month/1?date=2022-05-31&category=Education
+
+> Should send an authorization header with an valid token
+  
+__category is a opcional parameter__
+
+### Should return 
+
+Object with sum of all expenditures
+
+```json
+{
+  "monthExpense": {
+    "value": 100
+  }
+}
+```
+  
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+
+> 400 - User not exists.
+  
+> 400 - Your request must have a token.
+  
+> 401 - Not valid token.
+
+</details>
+</details>
+  
+<details>
+<summary><h2>DELETE api/expenditure/:id<h2></summary>
+
+Delete an expenditure with such id
+
+### Should return 
+
+Deleted expenditure
+
+```json
+{
+  "expenditure": {
+    "id": 75,
+    "value": 100,
+    "description": "New Books",
+    "userId": 1,
+    "date": "2022-05-17T00:00:00.000Z",
+    "category": "Education"
+  }
+}
+```
+  
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+  
+> 400 - Expenditure not existent.
+  
+> 401 - Not valid token.
+  
+> 400 - Your request must have a token.
+
+</details>
+</details>
+
 </detials>
 
