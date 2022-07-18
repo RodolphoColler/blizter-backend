@@ -1,6 +1,6 @@
 # blizter
 
-<details open>
+<details>
 <summary><h2>/user<h2></summary>
   
 <details>
@@ -10,7 +10,7 @@ To create a new user
 
 ```json
 {
-  "email": "test@gmail.com".
+  "email": "test@gmail.com",
   "password": "1234567",
   "name": "test"
 }
@@ -100,3 +100,111 @@ Array with all categories that are associated with the respective user
 
 </details>
 </detials>
+</details>
+</details>
+
+
+
+<details open>
+<summary><h2>/expenditure<h2></summary>
+
+<details>
+<summary><h2>POST api/expenditure<h2></summary>
+
+Create a new expenditure
+
+```json
+{
+  "value": 100,
+  "date": "2022-05-17",
+  "category": "Education",
+  "description": "New Books"
+}
+```
+
+> Should send an authorization header with an valid token
+
+### Should return 
+
+Object with the new expenditure
+
+```json
+{
+  "expenditure": {
+    "id": 75,
+    "value": 100,
+    "description": "New Books",
+    "userId": 1,
+    "date": "2022-05-17T00:00:00.000Z",
+    "category": "Education"
+  }
+}
+```
+  
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+ 
+> 400 - Category not existent.
+  
+> 400 - Your request must have a token.
+  
+> 401 - Not valid token.
+
+</details>
+</details>
+
+<details>
+<summary><h2>GET api/expenditure/:id?date&category<h2></summary>
+
+Read and filter based on query parameters
+
+> Date is used to search the expenditures in determinated month, so the use is, set the current year, month and the last day of the current month and it will return every expenditure from this month
+
+> Example api/expenditure/1?date=2022-05-31&category=Education
+
+> Should send an authorization header with an valid token
+
+### Should return 
+
+Array with the filtered expenditures
+
+```json
+{
+  "expenditures": [
+    {
+      "id": 53,
+      "value": 350,
+      "description": "Programming Books",
+      "userId": 1,
+      "date": "2022-06-13T00:00:00.000Z",
+      "category": "Education"
+    },
+    {
+      "id": 60,
+      "value": 1000,
+      "description": "New Course",
+      "userId": 1,
+      "date": "2022-06-13T00:00:00.000Z",
+      "category": "Education"
+    }
+  ]
+}
+```
+  
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+ 
+> 400 - Category not existent.
+
+> 400 - User not exists.
+  
+> 400 - Your request must have a token.
+  
+> 401 - Not valid token.
+
+</details>
+</details>
+</detials>
+
