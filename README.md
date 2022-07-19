@@ -105,7 +105,7 @@ Array with all categories that are associated with the respective user
 
 
 
-<details open>
+<details>
 <summary><h2>/expenditure<h2></summary>
 
 <details>
@@ -277,6 +277,139 @@ Deleted expenditure
 
 </details>
 </details>
+</details>
+  
+  
+<details>
+<summary><h2>/salary<h2></summary>
+  
+<details>
+<summary><h2>POST api/salary<h2></summary>
+  
+Create a new salary
+  
+> Should send an authorization header with an valid token
+  
+```json
+{
+  "value": 100,
+  "date": "2022-05-17",
+}
+```
+  
+### Should return 
+
+Object with the new salary
+
+```json
+{
+  "salary": {
+    "id": 75,
+    "value": 100,
+    "userId": 1,
+    "date": "2022-05-17T00:00:00.000Z",
+  }
+}
+```
+  
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+ 
+> 400 - User not exists.
+  
+> 400 - Your request must have a token.
+  
+> 401 - Not valid token.
+
+</details>
+</details>
+  
+<details>
+<summary><h2>GET api/salary/:id?date<h2></summary>
+  
+Read a user salary based on query date
+  
+> Example api/salary/1?date=2022-05-31
+  
+> Should send an authorization header with an valid token
+  
+### Should return 
+
+Object with the salary
+
+```json
+{
+  "salary": {
+    "id": 75,
+    "value": 100,
+    "userId": 1,
+    "date": "2022-05-17T00:00:00.000Z",
+  }
+}
+```
+  
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+ 
+> 400 - User not exists.
+  
+> 400 - Salary not exists.
+  
+> 400 - Your request must have a token.
+  
+> 401 - Not valid token.
+
+</details>
+</details>
+  
+<details>
+<summary><h2>PATCH api/salary/:id<h2></summary>
+  
+Update a user salary
+  
+```json
+{
+  "value": 500,
+}
+```
+  
+> Should send an authorization header with an valid token
+  
+### Should return 
+
+Object with updated salary
+
+```json
+{
+  "salary": {
+    "id": 75,
+    "value": 500,
+    "userId": 1,
+    "date": "2022-05-17T00:00:00.000Z",
+  }
+}
+```
+  
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+ 
+> 400 - User not exists.
+  
+> 400 - Salary not exists.
+  
+> 400 - Your request must have a token.
+  
+> 401 - Not valid token.
+
+</details>
+</details>
+  
+  
+</details>
+</detials>
 
 </detials>
 
