@@ -410,6 +410,113 @@ Object with updated salary
   
 </details>
 </detials>
+  
+  
+<details>
+<summary><h2>/login<h2></summary>
+  
+<details>
+<summary><h2>POST api/login<h2></summary>
+  
+To login
+
+```json
+{
+  "email": "test@gmail.com",
+  "password": "1234567",
+}
+```
+  
+### Should return 
+
+Jwt token
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+}
+```
+
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+ 
+> 400 - Incorrect email or password.
+
+</details>
+</details>
+
+</details>
+</detials>
+  
+  
+<details>
+<summary><h2>/category<h2></summary>
+  
+<details>
+<summary><h2>GET api/category<h2></summary>
+  
+> Should send an authorization header with an valid token
+
+### Should return 
+  
+Array with all categories registered
+
+```json
+[
+  "Education", "Medical" ...
+]
+```
+
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+  
+> 400 - Your request must have a token.
+  
+> 401 - Not valid token.
+
+</details>
+
+</details>
+
+</details>
+</detials>
+  
+    
+<details>
+<summary><h2>/token<h2></summary>
+  
+<details>
+<summary><h2>GET api/token<h2></summary>
+  
+> Should send an authorization header with an valid token
+
+### Should return 
+  
+Object with user id
+
+```json
+{
+  "id": 1
+}
+```
+ 
+<details>
+ 
+<summary><h3>Errors<h3></summary>
+  
+> 400 - Your request must have a token.
+  
+> 401 - Not valid token.
+
+</details>
+</details>
+  
+
+
+</details>
+</detials>
 
 </detials>
 
