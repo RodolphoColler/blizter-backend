@@ -5,7 +5,7 @@
   "main": "./server.js",
   "scripts": {
     "build": "npx --package typescript tsc --init",
-    "test": "mocha -r ts-node/register ./src/tests/*.{test,spec}.ts -t 10000 --exit",
+    "test": "mocha -r ts-node/register ./src/tests/**/*.{test,spec}.ts -t 10000 --exit",
     "prestart": "npm run build && npx prisma generate",
     "start": "node build/server.js",
     "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\"",
