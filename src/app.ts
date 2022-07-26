@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import * as router from './routes';
+import errorHandle from './middlewares/errorMiddleware';
 
 const app = express();
 
@@ -18,5 +19,7 @@ app.use('/salary', router.salary);
 app.use('/login', router.login);
 app.use('/user', router.user);
 app.use('/token', router.token);
+
+app.use(errorHandle);
 
 export default app;
