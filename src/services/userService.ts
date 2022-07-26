@@ -3,11 +3,13 @@ import * as model from '../models/userModel';
 import { IUser } from '../interfaces/userInterface';
 import * as categoryModel from '../models/categoryModel';
 import { jwtToken } from '../helpers/jwt';
+import notFoundError from '../errors/unauthorizedError';
+import conflictError from '../errors/conflictError';
 
 export async function create({ email, password, name }: IUser) {
   const isUserExistent = await model.readOne(email);
 
-  if (isUserExistent) throw new Error('User already exist.');
+  if (isUserExistent) throw conflictError('User already exist.');
 
   const encryptedPassword = await bcrypt.hash(password, 10);
 
@@ -21,7 +23,7 @@ export async function create({ email, password, name }: IUser) {
 export async function updateCategory(id: number, categoryId: number) {
   const isCategoryExistent = await categoryModel.readById(categoryId);
 
-  if (!isCategoryExistent) throw new Error('Category not existent.');
+  if (!isCategoryExistent) throw notFoundError('Category not existent.');
 
   const categories = await model.updateCategory(id, categoryId);
 
@@ -31,7 +33,7 @@ export async function updateCategory(id: number, categoryId: number) {
 export async function readCategory(id: number) {
   const isUserExistent = await model.readOneById(id);
 
-  if (!isUserExistent) throw new Error('User not exists.');
+  if (!isUserExistent) throw notFoundError('User not exists.');
 
   const categories = await model.readCategory(id);
 
