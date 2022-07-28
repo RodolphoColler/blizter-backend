@@ -11,10 +11,9 @@ import * as userData from '../../testData/userData';
 
 const { expect } = chai;
 
-describe('Test expenditure services', () => {
+describe.only('Test expenditure services', () => {
   describe('Test create service', () => {
     afterEach(() => { sinon.restore(); });
-
     it('When everything goes well', async () => {
       sinon.stub(categoryModel, 'readOne').resolves(categoryData.category);
       sinon.stub(model, 'create').resolves(data.createdExpenditureMock);
@@ -35,9 +34,7 @@ describe('Test expenditure services', () => {
   });
   describe('Test read service', () => {
     afterEach(() => { sinon.restore(); });
-
     it('When everything goes well', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
       sinon.stub(categoryModel, 'readOne').resolves(categoryData.category);
       sinon.stub(model, 'read').resolves(data.expenditures);
 
@@ -57,19 +54,9 @@ describe('Test expenditure services', () => {
       }
     });
 
-    it('When the user not exist in database', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(null);
-
-      try {
-        await service.read(data.queryExpenditure);
-      } catch ({ message }) {
-        expect(message).to.be.equal('User not exists.');
-      }
-    });
   });
   describe('Test deleteOne service', () => {
     afterEach(() => { sinon.restore(); });
-
     it('When everything goes well', async () => {
       sinon.stub(model, 'readOne').resolves(data.foundedExpenditure);
       sinon.stub(model, 'deleteOne').resolves(data.foundedExpenditure);
