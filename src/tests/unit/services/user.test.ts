@@ -4,9 +4,7 @@ import chai from 'chai';
 import chaiHttp = require('chai-http');
 import * as service from '../../../services/userService';
 import * as model from '../../../models/userModel';
-import * as categoryModel from '../../../models/categoryModel';
 import * as data from '../../testData/userData';
-import * as categoryData from '../../testData/categoryData';
 
 chai.use(chaiHttp);
 
