@@ -4,7 +4,7 @@
   "description": "",
   "main": "./server.js",
   "scripts": {
-    "build": "npx --package typescript tsc --init",
+    "build": "npx --package typescript tsc",
     "test": "mocha -r ts-node/register ./src/tests/**/*.{test,spec}.ts -t 10000 --exit",
     "prestart": "npm run build && npx prisma generate",
     "start": "node build/server.js",
