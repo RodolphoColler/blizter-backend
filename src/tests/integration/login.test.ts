@@ -50,7 +50,7 @@ describe('Integration test login', () => {
         .post('/login')
         .send(data.user);
 
-      expect(status).to.be.equal(400);
+      expect(status).to.be.equal(401);
       expect(message).to.be.equal('Incorrect email or password.');
     });
   });

@@ -3,16 +3,24 @@ export const createdExpenditureMock = {
   value: 1,
   userId: 1,
   date: new Date('2022-06-08'),
-  category: 'Education',
   description: 'Description',
+  "categoryId": 1,
+  "category": {
+      "id": 1,
+      "name": "Education"
+  }
 };
 
 export const expenditure = {
   value: 1,
   userId: 1,
   date: '2022-06-08',
-  category: 'Education',
   description: 'Description',
+  "categoryId": 1,
+  "category": {
+      "id": 1,
+      "name": "Education"
+  }
 };
 
 export const expenditures = [
@@ -21,14 +29,18 @@ export const expenditures = [
     value: 1,
     userId: 1,
     date: new Date('2022-06-08'),
-    category: 'Education',
     description: 'Description',
+    "categoryId": 1,
+    "category": {
+        "id": 1,
+        "name": "Education"
+    }
   },
 ];
 
 export const queryExpenditure = {
-  id: 1,
-  category: 'Education',
+  userId: 1,
+  categoryId: 1,
   date: '2022-06-08',
 };
 
@@ -37,15 +49,17 @@ export const foundedExpenditure = {
   value: 1,
   userId: 1,
   date: new Date('2022-06-08'),
-  category: 'Education',
   description: 'Description',
+  "categoryId": 1,
+  "category": {
+      "id": 1,
+      "name": "Education"
+  }
 };
 
-export const monthExpenseMock = {
-  _sum: {
-    value: 1,
-  },
-};
+export const modelMonthExpenseMock = [
+  { _sum: { value: 1 }, categoryId: 1 },
+]
 
 export const monthExpenseSumNullMock = {
   _sum: {
@@ -53,9 +67,15 @@ export const monthExpenseSumNullMock = {
   },
 };
 
-export const monthExpenseServiceResponse = {
-  value: 1,
-};
+export const monthExpenseServiceResponse = [
+  {
+    "sum": 1,
+    "category": {
+        "id": 1,
+        "name": "Education"
+    }
+  }
+];
 
 export const queryMonthExpenditure = {
   userId: 1,
