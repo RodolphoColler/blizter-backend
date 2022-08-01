@@ -8,9 +8,9 @@ const { JWT_SECRET } = process.env;
 const jwtConfig = { expiresIn: '7d' };
 
 export function jwtToken(id: number) {
-  return jwt.sign({ id }, JWT_SECRET || '', jwtConfig);
+  return jwt.sign({ id }, JWT_SECRET as jwt.Secret, jwtConfig);
 }
 
 export function jwtVerify(token: string) {
-  return jwt.verify(token, JWT_SECRET || '') as ITokenPayload;
+  return jwt.verify(token, JWT_SECRET as jwt.Secret) as ITokenPayload;
 }

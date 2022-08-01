@@ -1,13 +1,15 @@
 import { Response, Request, NextFunction } from 'express';
-import { IQueryExpenditure, IQueryMonthExpense } from '../interfaces/expenditureInterface';
+import { IQueryExpenditure } from '../interfaces/expenditureInterface';
 import * as service from '../services/expenditureService';
 
 export async function create(req: Request, res: Response, next: NextFunction) {
   try {
-    const { value, date, category, description } = req.body;
+    const { value, date, categoryId, description } = req.body;
     const { id: userId } = req.tokenPayload;
 
-    const createdExpenditure = await service.create({ value, userId, date, category, description });
+    const createdExpenditure = await service.create(
+      { value, userId, date, categoryId, description },
+    );
 
     return res.status(201).json({ expenditure: createdExpenditure });
   } catch (error) {
@@ -29,11 +31,10 @@ export async function deleteOne(req: Request, res: Response, next: NextFunction)
 
 export async function read(req: Request, res: Response, next: NextFunction) {
   try {
-    const { category, date } = req.query as unknown as IQueryExpenditure;
+    const { date } = req.query as unknown as IQueryExpenditure;
+    const { id: userId } = req.tokenPayload;
 
-    const { id } = req.params;
-
-    const expenditures = await service.read({ id: Number(id), category, date });
+    const expenditures = await service.read({ userId, date });
 
     return res.status(200).json({ expenditures });
   } catch (error) {
@@ -43,11 +44,10 @@ export async function read(req: Request, res: Response, next: NextFunction) {
 
 export async function readMonthExpense(req: Request, res: Response, next: NextFunction) {
   try {
-    const { date, category } = req.query as unknown as IQueryMonthExpense;
+    const { date } = req.query as unknown as IQueryExpenditure;
+    const { id: userId } = req.tokenPayload;
 
-    const { id } = req.params;
-
-    const monthExpense = await service.readMonthExpense({ userId: Number(id), date, category });
+    const monthExpense = await service.readMonthExpense({ userId, date });
 
     return res.status(200).json({ monthExpense });
   } catch (error) {

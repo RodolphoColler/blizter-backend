@@ -5,9 +5,9 @@ import validateToken from '../middlewares/validateToken';
 
 const router = Router();
 
-router.get('/month/:id', middlewares.monthExpense, validateToken, controllers.readMonthExpense);
+router.get('/month', middlewares.monthExpense, validateToken, controllers.readMonthExpense);
 
-router.get('/:id', middlewares.read, validateToken, controllers.read);
+router.get('/', middlewares.read, validateToken, controllers.read);
 
 router.post('/', middlewares.create, validateToken, controllers.create);
 

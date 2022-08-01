@@ -6,13 +6,7 @@ export async function read() {
   return categories;
 }
 
-export async function readOne(name: string) {
-  const category = prisma.category.findUnique({ where: { name } });
-
-  return category;
-}
-
-export async function readById(id: number) {
+export async function readOne(id: number) {
   const category = prisma.category.findUnique({ where: { id } });
 
   return category;

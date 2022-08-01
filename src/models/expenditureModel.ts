@@ -1,32 +1,33 @@
-import { IExpenditure, IQueryExpenditure, IQueryMonthExpense } from '../interfaces/expenditureInterface';
+import { IExpenditure, IQueryExpenditure } from '../interfaces/expenditureInterface';
 import { prisma } from './prisma';
 
-export async function create({ value, userId, date, category, description }: IExpenditure) {
+export async function create({ value, userId, date, categoryId, description }: IExpenditure) {
   const createdExpenditure = await prisma.expenditure.create({
     data: {
       value,
       user: { connect: { id: userId } },
       date: new Date(date),
-      category,
       description,
+      category: { connect: { id: categoryId } },
     },
+    include: { category: true },
   });
 
   return createdExpenditure;
 }
 
-export async function read({ id, category, date }: IQueryExpenditure) {
+export async function read({ userId, date }: IQueryExpenditure) {
   const [year, month, day] = date.split('-');
 
   const expenditures = await prisma.expenditure.findMany({
     where: {
-      userId: id,
-      category,
+      userId,
       date: {
         gte: new Date(`${year}-${month}-01`),
         lte: new Date(`${year}-${month}-${day}`),
       },
     },
+    include: { category: true },
   });
 
   return expenditures;
@@ -44,13 +45,13 @@ export async function readOne(id: number) {
   return deletedExpenditure;
 }
 
-export async function readMonthExpense({ userId, date, category }: IQueryMonthExpense) {
+export async function readMonthExpense({ userId, date }: IQueryExpenditure) {
   const [year, month, day] = date.split('-');
 
-  const monthExpense = await prisma.expenditure.aggregate({
+  const monthExpense = await prisma.expenditure.groupBy({
+    by: ['categoryId'],
     where: {
       userId,
-      category,
       date: {
         gte: new Date(`${year}-${month}-01`),
         lte: new Date(`${year}-${month}-${day}`),
