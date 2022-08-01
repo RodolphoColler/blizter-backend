@@ -10,3 +10,8 @@ export interface IQueryExpenditure {
   userId: number,
   date: string
 }
+
+export interface IGroupedExpenditure {
+  categoryId: number,
+  _sum: { value: number | null } | null
+}

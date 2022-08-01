@@ -1,4 +1,4 @@
-import { IExpenditure, IQueryExpenditure } from '../interfaces/expenditureInterface';
+import { IExpenditure, IGroupedExpenditure, IQueryExpenditure } from '../interfaces/expenditureInterface';
 import * as model from '../models/expenditureModel';
 import * as categoryModel from '../models/categoryModel';
 import notFoundError from '../errors/notFoundError';
@@ -32,10 +32,11 @@ export async function read({ userId, date }: IQueryExpenditure) {
 export async function readMonthExpense({ userId, date }: IQueryExpenditure) {
   const groupedExpenditures = await model.readMonthExpense({ userId, date });
 
-  const monthExpenditurePromises = groupedExpenditures.map(async ({ _sum, categoryId }) => ({
-    sum: _sum.value,
-    category: await categoryModel.readOne(categoryId),
-  }));
+  const monthExpenditurePromises = groupedExpenditures
+    .map(async ({ _sum, categoryId }: IGroupedExpenditure) => ({
+      sum: _sum?.value,
+      category: await categoryModel.readOne(categoryId),
+    }));
 
   const monthExpenditure = await Promise.all(monthExpenditurePromises);
 
