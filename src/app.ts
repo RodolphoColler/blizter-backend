@@ -3,7 +3,7 @@ import cors from 'cors';
 import * as router from './routes';
 import errorHandle from './middlewares/errorMiddleware';
 
-const app = express()
+const app = express();
 
 app.use(express.json());
 
