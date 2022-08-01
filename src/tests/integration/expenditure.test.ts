@@ -7,7 +7,6 @@ import { after } from 'mocha';
 import app from '../../app';
 import { prisma } from '../../models/prisma';
 import * as data from '../testData/expenditureData';
-import * as userData from '../testData/userData';
 import * as categoryData from '../testData/categoryData';
 import { jwtToken } from '../../helpers/jwt';
 
@@ -58,7 +57,7 @@ describe('Integration test expenditure', () => {
         .send(data.expenditure)
         .set({ authorization: token });
 
-      expect(status).to.be.equal(400);
+      expect(status).to.be.equal(404);
       expect(message).to.be.equal('Category not existent.');
     });
   });
@@ -69,13 +68,11 @@ describe('Integration test expenditure', () => {
     it('When everything goes well should return all the expenditures', async () => {
       // @ts-expect-error
       delete data.expenditures[0].date;
-      prisma.user.findUnique = sinon.stub().resolves(userData.user);
-      prisma.category.findUnique = sinon.stub().resolves(categoryData.category);
       prisma.expenditure.findMany = sinon.stub().resolves(data.expenditures);
 
       const { status, body } = await chai
         .request(app)
-        .get('/expenditure/1?date=2022-06-30&category=Pet')
+        .get('/expenditure?date=2022-06-30')
         .set({ authorization: token });
 
       expect(status).to.be.equal(200);
@@ -83,28 +80,17 @@ describe('Integration test expenditure', () => {
     });
 
     it('When database returns an unexpected error', async () => {
-      prisma.user.findUnique = sinon.stub().throws('Inside server error');
+      prisma.expenditure.findMany = sinon.stub().throws('Inside server error');
 
       const { status, body: { message } } = await chai
         .request(app)
-        .get('/expenditure/1?date=2022-06-30&category=Pet')
+        .get('/expenditure?date=2022-06-30')
         .set({ authorization: token });
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
     });
 
-    it('When service returns an error', async () => {
-      prisma.user.findUnique = sinon.stub().resolves(null);
-
-      const { status, body: { message } } = await chai
-        .request(app)
-        .get('/expenditure/1/?date=2022-06-30&category=Pet')
-        .set({ authorization: token });
-
-      expect(status).to.be.equal(400);
-      expect(message).to.be.equal('User not exists.');
-    });
   });
   describe('Test expenditure delete/:id route', () => {
     after(() => { sinon.restore(); });
@@ -146,21 +132,21 @@ describe('Integration test expenditure', () => {
         .delete('/expenditure/1')
         .set({ authorization: token });
 
-      expect(status).to.be.equal(400);
+      expect(status).to.be.equal(404);
       expect(message).to.be.equal('Expenditure not existent.');
     });
   });
-  describe('Test expenditure get/monthExpend/:id route', () => {
+  describe('Test expenditure get/month route', () => {
     after(() => { sinon.restore(); });
     const token = jwtToken(1);
 
     it('When everything goes well should return all the expenditures', async () => {
-      prisma.user.findUnique = sinon.stub().resolves(userData.user);
-      prisma.expenditure.aggregate = sinon.stub().resolves(data.monthExpenseMock);
+      prisma.expenditure.groupBy = sinon.stub().resolves(data.modelMonthExpenseMock);
+      prisma.category.findUnique = sinon.stub().resolves(categoryData.category)
 
       const { status, body } = await chai
         .request(app)
-        .get('/expenditure/month/1?date=2022-06-30')
+        .get('/expenditure/month?date=2022-06-30')
         .set({ authorization: token });
 
       expect(status).to.be.equal(200);
@@ -168,27 +154,16 @@ describe('Integration test expenditure', () => {
     });
 
     it('When database returns an unexpected error', async () => {
-      prisma.user.findUnique = sinon.stub().throws('Inside server error');
+      prisma.expenditure.groupBy = sinon.stub().throws('Inside server error');
 
       const { status, body: { message } } = await chai
         .request(app)
-        .get('/expenditure/month/1?date=2022-06-30')
+        .get('/expenditure/month?date=2022-06-30')
         .set({ authorization: token });
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
     });
 
-    it('When service returns an error', async () => {
-      prisma.user.findUnique = sinon.stub().resolves(null);
-
-      const { status, body: { message } } = await chai
-        .request(app)
-        .get('/expenditure/month/1/?date=2022-06-30')
-        .set({ authorization: token });
-
-      expect(status).to.be.equal(400);
-      expect(message).to.be.equal('User not exists.');
-    });
   });
 });
