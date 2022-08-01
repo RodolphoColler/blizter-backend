@@ -4,14 +4,12 @@ import chai from 'chai';
 import * as service from '../../../services/expenditureService';
 import * as model from '../../../models/expenditureModel';
 import * as categoryModel from '../../../models/categoryModel';
-import * as userModel from '../../../models/userModel';
 import * as data from '../../testData/expenditureData';
 import * as categoryData from '../../testData/categoryData';
-import * as userData from '../../testData/userData';
 
 const { expect } = chai;
 
-describe.only('Test expenditure services', () => {
+describe('Test expenditure services', () => {
   describe('Test create service', () => {
     afterEach(() => { sinon.restore(); });
     it('When everything goes well', async () => {
@@ -35,23 +33,11 @@ describe.only('Test expenditure services', () => {
   describe('Test read service', () => {
     afterEach(() => { sinon.restore(); });
     it('When everything goes well', async () => {
-      sinon.stub(categoryModel, 'readOne').resolves(categoryData.category);
       sinon.stub(model, 'read').resolves(data.expenditures);
 
       const expenditure = await service.read(data.queryExpenditure);
 
       expect(expenditure).to.be.deep.equal(data.expenditures);
-    });
-
-    it('When the category not exist in database', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
-      sinon.stub(categoryModel, 'readOne').resolves(null);
-
-      try {
-        await service.read(data.queryExpenditure);
-      } catch ({ message }) {
-        expect(message).to.be.equal('Category not existent.');
-      }
     });
 
   });
@@ -80,31 +66,20 @@ describe.only('Test expenditure services', () => {
     afterEach(() => { sinon.restore(); });
 
     it('When everything goes well', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
-      sinon.stub(model, 'readMonthExpense').resolves(data.monthExpenseMock);
+      sinon.stub(model, 'readMonthExpense').resolves(data.modelMonthExpenseMock);
+      sinon.stub(categoryModel, 'readOne').resolves(categoryData.category);
 
       const monthExpense = await service.readMonthExpense(data.queryMonthExpenditure);
 
       expect(monthExpense).to.be.deep.equal(data.monthExpenseServiceResponse);
     });
 
-    it('When the value is null', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
-      sinon.stub(model, 'readMonthExpense').resolves(data.monthExpenseSumNullMock);
+    it('When database returns an empty array', async () => {
+      sinon.stub(model, 'readMonthExpense').resolves([]);
 
       const monthExpense = await service.readMonthExpense(data.queryMonthExpenditure);
 
-      expect(monthExpense).to.be.deep.equal({ value: 0 });
-    });
-
-    it('When the user not exist in database', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(null);
-
-      try {
-        await service.readMonthExpense(data.queryMonthExpenditure);
-      } catch ({ message }) {
-        expect(message).to.be.equal('User not exists.');
-      }
+      expect(monthExpense).to.be.deep.equal([]);
     });
   });
 });
