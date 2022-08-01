@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import * as schemas from '../schemas/expenditureSchema';
 
 export function create(req: Request, res: Response, next: NextFunction) {
-  const { value, date, category, description } = req.body;
+  const { value, date, categoryId, description } = req.body;
 
-  const { error } = schemas.create.validate({ value, date, category, description });
+  const { error } = schemas.create.validate({ value, date, categoryId, description });
 
   if (error) return res.status(400).json({ message: error.message });
 
@@ -12,9 +12,9 @@ export function create(req: Request, res: Response, next: NextFunction) {
 }
 
 export function read(req: Request, res: Response, next: NextFunction) {
-  const { date, category } = req.query;
+  const { date } = req.query;
 
-  const { error } = schemas.read.validate({ date, category });
+  const { error } = schemas.read.validate({ date });
 
   if (error) return res.status(400).json({ message: error.message });
 
