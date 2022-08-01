@@ -42,13 +42,13 @@ describe('Test expenditure models', () => {
   });
   describe('Test readMonthExpense method', () => {
     it('When expense is returned', async () => {
-      prisma.expenditure.aggregate = sinon.stub().resolves(data.monthExpenseMock);
+      prisma.expenditure.groupBy = sinon.stub().resolves(data.modelMonthExpenseMock);
 
       const expenditure = await model.readMonthExpense(data.queryMonthExpenditure);
-      expect(expenditure).to.be.deep.equal(data.monthExpenseMock);
+      expect(expenditure).to.be.deep.equal(data.modelMonthExpenseMock);
     });
     it('When the an error is returned', async () => {
-      prisma.expenditure.aggregate = sinon.stub().throws(new Error('error'));
+      prisma.expenditure.groupBy = sinon.stub().throws(new Error('error'));
       try {
         await model.readMonthExpense(data.queryMonthExpenditure);
       } catch ({ message }) {
