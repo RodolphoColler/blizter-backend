@@ -1,11 +1,11 @@
 export const categories = [
   {
     id: 1,
-    name: 'Education\n',
+    name: 'Education',
   },
 ];
 
 export const category = {
   id: 1,
-  name: 'Education\n',
+  name: 'Education',
 };
