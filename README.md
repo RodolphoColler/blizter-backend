@@ -1,5 +1,8 @@
 # blizter
 
+> I will refactor the API to increase performance and make it more restful, so in some time this documentation will no longer be exactly
+ the way it works, but i will update soon as possible.
+
 <details>
 <summary><h2>/user<h2></summary>
   
