@@ -5,7 +5,7 @@ import errorHandle from './middlewares/errorMiddleware';
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json())
 
 const corsConfig = {
   origin: ['http://localhost:3000', 'https://blizter.vercel.app'],
