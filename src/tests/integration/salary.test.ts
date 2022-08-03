@@ -7,7 +7,6 @@ import { after } from 'mocha';
 import app from '../../app';
 import { prisma } from '../../models/prisma';
 import * as data from '../testData/salaryData';
-import * as userData from '../testData/userData';
 import { jwtToken } from '../../helpers/jwt';
 
 chai.use(chaiHttp);
@@ -22,7 +21,7 @@ describe('Integration test salary', () => {
     it('When everything goes well should return the new salary', async () => {
       // @ts-expect-error
       delete data.salaryMock.date;
-      prisma.user.findUnique = sinon.stub().resolves(userData.user);
+      prisma.salary.findMany = sinon.stub().resolves(undefined);
       prisma.salary.create = sinon.stub().resolves(data.salaryMock);
 
       const { status, body } = await chai
@@ -36,7 +35,7 @@ describe('Integration test salary', () => {
     });
 
     it('When database returns an unexpected error', async () => {
-      prisma.user.findUnique = sinon.stub().throws('Inside server error');
+      prisma.salary.findMany = sinon.stub().throws('Inside server error');
 
       const { status, body: { message } } = await chai
         .request(app)
@@ -49,7 +48,7 @@ describe('Integration test salary', () => {
     });
 
     it('When service returns an error', async () => {
-      prisma.user.findUnique = sinon.stub().resolves(null);
+      prisma.salary.findMany = sinon.stub().resolves(data.salaryMock);
 
       const { status, body: { message } } = await chai
         .request(app)
@@ -57,23 +56,22 @@ describe('Integration test salary', () => {
         .send(data.createSalaryDataIntegration)
         .set({ authorization: token });
 
-      expect(status).to.be.equal(400);
-      expect(message).to.be.equal('User not exists.');
+      expect(status).to.be.equal(409);
+      expect(message).to.be.equal('Salary already exists.');
     });
   });
-  describe('Test salary get/:id route', () => {
+  describe('Test salary get/ route', () => {
     after(() => { sinon.restore(); });
     const token = jwtToken(1);
 
-    it('When everything goes well should return the new salary', async () => {
+    it('When everything goes well should return the current salary', async () => {
       // @ts-expect-error
       delete data.salaryArrayMock[0].date;
-      prisma.user.findUnique = sinon.stub().resolves(userData.user);
       prisma.salary.findMany = sinon.stub().resolves(data.salaryArrayMock);
 
       const { status, body } = await chai
         .request(app)
-        .get('/salary/1?date=2022-06-30')
+        .get('/salary?date=2022-06-30')
         .set({ authorization: token });
 
       expect(status).to.be.equal(200);
@@ -81,11 +79,11 @@ describe('Integration test salary', () => {
     });
 
     it('When database returns an unexpected error', async () => {
-      prisma.user.findUnique = sinon.stub().throws('Inside server error');
+      prisma.salary.findMany = sinon.stub().throws('Inside server error');
 
       const { status, body: { message } } = await chai
         .request(app)
-        .get('/salary/1?date=2022-06-30')
+        .get('/salary?date=2022-06-30')
         .set({ authorization: token });
 
       expect(status).to.be.equal(500);
@@ -93,22 +91,22 @@ describe('Integration test salary', () => {
     });
 
     it('When service returns an error', async () => {
-      prisma.user.findUnique = sinon.stub().resolves(null);
+      prisma.salary.findMany = sinon.stub().resolves([]);
 
       const { status, body: { message } } = await chai
         .request(app)
-        .get('/salary/1?date=2022-06-30')
+        .get('/salary?date=2022-06-30')
         .set({ authorization: token });
 
-      expect(status).to.be.equal(400);
-      expect(message).to.be.equal('User not exists.');
+      expect(status).to.be.equal(404);
+      expect(message).to.be.equal('Salary not exists.');
     });
   });
-  describe('Test salary get/:id route', () => {
+  describe('Test salary patch/ route', () => {
     after(() => { sinon.restore(); });
     const token = jwtToken(1);
 
-    it('When everything goes well should return the new salary', async () => {
+    it('When everything goes well should return the update salary', async () => {
       // @ts-expect-error
       delete data.salaryMock.date;
       prisma.salary.findUnique = sinon.stub().resolves(data.salaryMock);
@@ -146,7 +144,7 @@ describe('Integration test salary', () => {
         .send(data.updateSalaryData)
         .set({ authorization: token });
 
-      expect(status).to.be.equal(400);
+      expect(status).to.be.equal(404);
       expect(message).to.be.equal('Salary not exists.');
     });
   });
