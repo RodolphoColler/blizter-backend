@@ -1,24 +1,14 @@
-import { Response, Request } from 'express';
+import { Response, Request, NextFunction } from 'express';
 import * as service from '../services/userService';
 
-enum errors {
-  'User already exist.' = 400,
-  'Category not existent.' = 400,
-  'User not exists.' = 400,
-}
-
-export async function create(req: Request, res: Response) {
+export async function create(req: Request, res: Response, next: NextFunction) {
   try {
     const { email, password, name } = req.body;
 
     const token = await service.create({ email, password, name });
 
     return res.status(201).json({ token });
-  } catch (error: any) {
-    const { message } = error;
-
-    if (message in errors) return res.status(Number(errors[message])).json({ message });
-
-    return res.status(500).json({ message: 'Inside server error.' });
+  } catch (error) {
+    return next(error);
   }
 }
