@@ -7,8 +7,6 @@ import { after } from 'mocha';
 import app from '../../app';
 import { prisma } from '../../models/prisma';
 import * as data from '../testData/userData';
-import * as categoryData from '../testData/categoryData';
-import { jwtToken } from '../../helpers/jwt';
 
 chai.use(chaiHttp);
 
@@ -53,7 +51,7 @@ describe('Integration test user', () => {
         .post('/user')
         .send(data.user);
 
-      expect(status).to.be.equal(400);
+      expect(status).to.be.equal(409);
       expect(message).to.be.equal('User already exist.');
     });
   });
