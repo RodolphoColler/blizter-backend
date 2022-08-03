@@ -3,9 +3,7 @@ import * as sinon from 'sinon';
 import chai from 'chai';
 import * as service from '../../../services/salaryService';
 import * as model from '../../../models/salaryModel';
-import * as userModel from '../../../models/userModel';
 import * as data from '../../testData/salaryData';
-import * as userData from '../../testData/userData';
 
 const { expect } = chai;
 
@@ -14,59 +12,51 @@ describe('Test salary services', () => {
     afterEach(() => { sinon.restore(); });
 
     it('When everything goes well', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
+      sinon.stub(model, 'read').resolves(undefined);
       sinon.stub(model, 'create').resolves(data.salaryMock);
 
       const salary = await service.create(data.createSalaryData);
 
       expect(salary).to.be.deep.equal(data.salaryMock);
     });
-    it('When the user not exist in database', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(null);
+    it('When the salary already exist in database', async () => {
+      sinon.stub(model, 'read').resolves(data.salaryArrayMock);
 
       try {
         await service.create(data.createSalaryData);
-      } catch ({ message }) {
-        expect(message).to.be.equal('User not exists.');
+      } catch ({ message, statusCode }) {
+        expect(message).to.be.equal('Salary already exists.');
+        expect(statusCode).to.be.equal(409)
       }
     });
   });
-  describe('Test readOne service', () => {
+  describe('Test read service', () => {
     afterEach(() => { sinon.restore(); });
 
     it('When everything goes well', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
-      sinon.stub(model, 'readOne').resolves(data.salaryArrayMock);
+      sinon.stub(model, 'read').resolves(data.salaryArrayMock);
 
-      const salary = await service.readOne(data.querySalary);
+      const salary = await service.read(data.querySalary);
 
       expect(salary).to.be.deep.equal(data.salaryArrayMock[0]);
     });
-    it('When the user not exist in database', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(null);
 
-      try {
-        await service.readOne(data.querySalary);
-      } catch ({ message }) {
-        expect(message).to.be.equal('User not exists.');
-      }
-    });
     it('When salary is not founded', async () => {
-      sinon.stub(userModel, 'readOneById').resolves(userData.createdUserMock);
-      sinon.stub(model, 'readOne').resolves([]);
+      sinon.stub(model, 'read').resolves([]);
 
       try {
-        await service.readOne(data.querySalary);
+        await service.read(data.querySalary);
       } catch ({ message }) {
         expect(message).to.be.equal('Salary not exists.');
       }
     });
+
   });
   describe('Test updateOne service', () => {
     afterEach(() => { sinon.restore(); });
 
     it('When everything goes well', async () => {
-      sinon.stub(model, 'readOneById').resolves(data.salaryMock);
+      sinon.stub(model, 'readOne').resolves(data.salaryMock);
       sinon.stub(model, 'updateOne').resolves(data.salaryMock);
 
       const salary = await service.updateOne(data.updateSalaryData);
@@ -74,7 +64,7 @@ describe('Test salary services', () => {
       expect(salary).to.be.deep.equal(data.salaryMock);
     });
     it('When the user not exist in database', async () => {
-      sinon.stub(model, 'readOneById').resolves(null);
+      sinon.stub(model, 'readOne').resolves(null);
 
       try {
         await service.updateOne(data.updateSalaryData);
