@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/', middlewares.create, validateToken, controllers.create);
 
-router.get('/:id', middlewares.readOne, validateToken, controllers.readOne);
+router.get('/', middlewares.readOne, validateToken, controllers.read);
 
 router.patch('/:id', middlewares.updateOne, validateToken, controllers.updateOne);
 
