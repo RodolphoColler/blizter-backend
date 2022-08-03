@@ -13,7 +13,7 @@ export async function create({ value, userId, date }: ISalary) {
   return createdSalary;
 }
 
-export async function readOne({ userId, date }: IQuerySalary) {
+export async function read({ userId, date }: IQuerySalary) {
   const [year, month, day] = date.split('-');
 
   const salary = await prisma.salary.findMany({
@@ -29,7 +29,7 @@ export async function readOne({ userId, date }: IQuerySalary) {
   return salary;
 }
 
-export async function readOneById(id: number) {
+export async function readOne(id: number) {
   const salary = await prisma.salary.findUnique({ where: { id } });
 
   return salary;
