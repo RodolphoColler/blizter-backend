@@ -25,32 +25,32 @@ describe('Test salary models', () => {
       }
     });
   });
-  describe('Test readOne method', () => {
+  describe('Test read method', () => {
     it('When salary is founded', async () => {
       prisma.salary.findMany = sinon.stub().resolves(data.salaryMock);
 
-      const salary = await model.readOne(data.createSalaryData);
+      const salary = await model.read(data.createSalaryData);
       expect(salary).to.be.deep.equal(data.salaryMock);
     });
     it('When the undefined is returned', async () => {
       prisma.salary.findMany = sinon.stub().resolves(undefined);
 
-      const salary = await model.readOne(data.createSalaryData);
+      const salary = await model.read(data.createSalaryData);
 
       expect(salary).to.be.deep.equal(undefined);
     });
   });
-  describe('Test readOneById method', () => {
+  describe('Test readOne method', () => {
     it('When salary is founded', async () => {
       prisma.salary.findUnique = sinon.stub().resolves(data.salaryMock);
 
-      const salary = await model.readOneById(1);
+      const salary = await model.readOne(1);
       expect(salary).to.be.deep.equal(data.salaryMock);
     });
     it('When the undefined is returned', async () => {
       prisma.salary.findUnique = sinon.stub().resolves(undefined);
 
-      const salary = await model.readOneById(1);
+      const salary = await model.readOne(1);
 
       expect(salary).to.be.deep.equal(undefined);
     });
