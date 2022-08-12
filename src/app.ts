@@ -17,7 +17,7 @@ app.use(cookieParser());
 const sessionConfig = {
   secret: process.env.JWT_SECRET || '',
   cookie: {
-    sameSite: false,
+    sameSite: true,
     secure: true,
   },
 };
