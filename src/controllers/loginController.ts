@@ -7,7 +7,7 @@ export async function validate(req: Request, res: Response, next: NextFunction) 
 
     const token = await service.validate({ email, password });
 
-    return res.status(204).cookie('token', token, { httpOnly: true }).end();
+    return res.status(204).cookie('token', token, { httpOnly: true, sameSite: 'none' }).end();
   } catch (error) {
     return next(error);
   }
