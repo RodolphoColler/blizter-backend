@@ -24,11 +24,10 @@ describe('Integration test category', () => {
       const { status, body } = await chai
         .request(app)
         .get('/category')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(200);
-      expect(body).to.have.key('categories');
-      expect(body.categories).to.be.a('array');
+      expect(body.categories).to.be.deep.equal(data.categories);
     });
 
     it('When database returns an unexpected error', async () => {
@@ -37,7 +36,7 @@ describe('Integration test category', () => {
       const { status, body: { message } } = await chai
         .request(app)
         .get('/category')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
