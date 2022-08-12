@@ -20,7 +20,7 @@ describe('Test token middleware', () => {
       next = sinon.stub();
       response.status = sinon.stub().returns(response);
       response.json = sinon.stub();
-      request.headers = {};
+      request.cookies = {};
     });
 
     it('When token is not provided', () => {
@@ -32,7 +32,7 @@ describe('Test token middleware', () => {
     });
 
     it('When token is not valid', () => {
-      request.headers.authorization = 'tokenNotValid';
+      request.cookies.token = 'tokenNotValid';
       validateToken(request, response, next);
 
       expect((response.status as sinon.SinonStub).calledWith(400)).to.be.equal(true);
@@ -49,7 +49,7 @@ describe('Test token middleware', () => {
       });
 
       it('Next function should be called', () => {
-        request.headers.authorization = 'tokenValid';
+        request.cookies.token = 'validToken';
         validateToken(request, response, next);
 
         expect((next as sinon.SinonStub).called).to.be.equal(true);
