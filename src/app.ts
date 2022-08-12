@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
+// import session from 'express-session';
 import dotenv from 'dotenv';
 import * as router from './routes';
 import errorHandle from './middlewares/errorMiddleware';
@@ -14,20 +14,20 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-const sessionConfig = {
-  secret: process.env.JWT_SECRET || '',
-  cookie: {
-    sameSite: true,
-    secure: true,
-  },
-};
+// const sessionConfig = {
+//   secret: process.env.JWT_SECRET || '',
+//   cookie: {
+//     sameSite: true,
+//     secure: true,
+//   },
+// };
 
 const corsConfig = {
   origin: ['http://localhost:3000', 'https://blizter.vercel.app'],
   credentials: true,
 };
 
-app.use(session(sessionConfig));
+// app.use(session(sessionConfig));
 
 app.use(cors(corsConfig));
 
