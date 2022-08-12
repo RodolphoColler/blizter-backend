@@ -28,7 +28,7 @@ describe('Integration test salary', () => {
         .request(app)
         .post('/salary')
         .send(data.createSalaryDataIntegration)
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(201);
       expect(body.salary).to.be.deep.equal(data.salaryMock);
@@ -41,7 +41,7 @@ describe('Integration test salary', () => {
         .request(app)
         .post('/salary')
         .send(data.createSalaryDataIntegration)
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
@@ -54,7 +54,7 @@ describe('Integration test salary', () => {
         .request(app)
         .post('/salary')
         .send(data.createSalaryDataIntegration)
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(409);
       expect(message).to.be.equal('Salary already exists.');
@@ -72,7 +72,7 @@ describe('Integration test salary', () => {
       const { status, body } = await chai
         .request(app)
         .get('/salary?date=2022-06-30')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(200);
       expect(body.salary).to.be.deep.equal(data.salaryMock);
@@ -84,7 +84,7 @@ describe('Integration test salary', () => {
       const { status, body: { message } } = await chai
         .request(app)
         .get('/salary?date=2022-06-30')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
@@ -96,7 +96,7 @@ describe('Integration test salary', () => {
       const { status, body: { message } } = await chai
         .request(app)
         .get('/salary?date=2022-06-30')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(404);
       expect(message).to.be.equal('Salary not exists.');
@@ -116,7 +116,7 @@ describe('Integration test salary', () => {
         .request(app)
         .patch('/salary/1')
         .send(data.updateSalaryData)
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(200);
       expect(body.salary).to.be.deep.equal(data.salaryMock);
@@ -129,7 +129,7 @@ describe('Integration test salary', () => {
         .request(app)
         .patch('/salary/1')
         .send(data.updateSalaryData)
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
@@ -142,7 +142,7 @@ describe('Integration test salary', () => {
         .request(app)
         .patch('/salary/1')
         .send(data.updateSalaryData)
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(404);
       expect(message).to.be.equal('Salary not exists.');
