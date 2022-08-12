@@ -16,19 +16,17 @@ describe('Integration test user', () => {
   describe('Test user post route', () => {
     after(() => { sinon.restore(); });
 
-    it('When everything goes well should return a token', async () => {
+    it('When everything goes well send a cookie', async () => {
       prisma.user.findUnique = sinon.stub().resolves(undefined);
 
       prisma.user.create = sinon.stub().resolves(data.createdUserMock);
 
-      const { status, body } = await chai
+      const { status } = await chai
         .request(app)
         .post('/user')
         .send(data.user);
 
-      expect(status).to.be.equal(201);
-      expect(body).to.have.key('token');
-      expect(body.token).to.be.a('string');
+      expect(status).to.be.equal(204);
     });
 
     it('When database returns an unexpected error', async () => {
