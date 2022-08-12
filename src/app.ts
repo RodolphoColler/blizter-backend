@@ -18,6 +18,7 @@ const sessionConfig = {
   secret: process.env.JWT_SECRET || '',
   cookie: {
     sameSite: false,
+    secure: true,
   },
 };
 
