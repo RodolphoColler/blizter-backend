@@ -7,7 +7,7 @@ export async function create(req: Request, res: Response, next: NextFunction) {
 
     const token = await service.create({ email, password, name });
 
-    return res.status(204).cookie('token', token, { httpOnly: true }).end();
+    return res.status(204).cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).end();
   } catch (error) {
     return next(error);
   }
