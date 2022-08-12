@@ -29,7 +29,7 @@ describe('Integration test expenditure', () => {
         .request(app)
         .post('/expenditure')
         .send(data.expenditure)
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(201);
       expect(body.expenditure).to.be.deep.equal(data.createdExpenditureMock);
@@ -42,7 +42,7 @@ describe('Integration test expenditure', () => {
         .request(app)
         .post('/expenditure')
         .send(data.expenditure)
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
@@ -55,7 +55,7 @@ describe('Integration test expenditure', () => {
         .request(app)
         .post('/expenditure')
         .send(data.expenditure)
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(404);
       expect(message).to.be.equal('Category not existent.');
@@ -73,7 +73,7 @@ describe('Integration test expenditure', () => {
       const { status, body } = await chai
         .request(app)
         .get('/expenditure?date=2022-06-30')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(200);
       expect(body.expenditures).to.be.deep.equal(data.expenditures);
@@ -85,7 +85,7 @@ describe('Integration test expenditure', () => {
       const { status, body: { message } } = await chai
         .request(app)
         .get('/expenditure?date=2022-06-30')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
@@ -105,7 +105,7 @@ describe('Integration test expenditure', () => {
       const { status, body } = await chai
         .request(app)
         .delete('/expenditure/1')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(200);
       expect(body.expenditure).to.be.deep.equal(data.foundedExpenditure);
@@ -118,7 +118,7 @@ describe('Integration test expenditure', () => {
       const { status, body: { message } } = await chai
         .request(app)
         .delete('/expenditure/1')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
@@ -130,7 +130,7 @@ describe('Integration test expenditure', () => {
       const { status, body: { message } } = await chai
         .request(app)
         .delete('/expenditure/1')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(404);
       expect(message).to.be.equal('Expenditure not existent.');
@@ -147,7 +147,7 @@ describe('Integration test expenditure', () => {
       const { status, body } = await chai
         .request(app)
         .get('/expenditure/month?date=2022-06-30')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(200);
       expect(body.monthExpense).to.be.deep.equal(data.monthExpenseServiceResponse);
@@ -159,7 +159,7 @@ describe('Integration test expenditure', () => {
       const { status, body: { message } } = await chai
         .request(app)
         .get('/expenditure/month?date=2022-06-30')
-        .set({ authorization: token });
+        .set('Cookie', `token=${token}`);
 
       expect(status).to.be.equal(500);
       expect(message).to.be.equal('Inside server error.');
