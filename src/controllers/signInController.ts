@@ -1,5 +1,5 @@
 import { Response, Request, NextFunction } from 'express';
-import * as service from '../services/loginService';
+import * as service from '../services/signInService';
 
 export async function validate(req: Request, res: Response, next: NextFunction) {
   try {
