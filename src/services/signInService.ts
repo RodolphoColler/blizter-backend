@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
-import * as model from '../models/loginModel';
+import * as model from '../models/signInModel';
 import { jwtToken } from '../helpers/jwt';
-import { ILogin } from '../interfaces/loginInterface';
+import { ILogin } from '../interfaces/signInInterface';
 import { unauthorizedError } from '../errors';
 
 export async function validate({ email, password }: ILogin) {
