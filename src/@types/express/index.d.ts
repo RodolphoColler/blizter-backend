@@ -1,10 +1,11 @@
 import { Express } from 'express';
-import { ITokenPayload } from '../../interfaces/tokenInterface';
+import { ISocialTokenPayload, ITokenPayload } from '../../interfaces/tokenInterface';
 
 declare global{
   namespace Express {
     interface Request {
       tokenPayload: ITokenPayload
+      socialTokenPayload: ISocialTokenPayload
     }
   }
 }
