@@ -3,3 +3,8 @@ export interface IUser {
   password: string,
   name: string,
 }
+
+export interface ISocialUser {
+  email: string,
+  name: string,
+}

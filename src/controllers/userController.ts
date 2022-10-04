@@ -12,3 +12,15 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     return next(error);
   }
 }
+
+export async function createSocial(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { email, name } = req.socialTokenPayload;
+
+    const token = await service.createSocial({ email, name });
+
+    return res.status(204).cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).end();
+  } catch (error) {
+    return next(error);
+  }
+}
