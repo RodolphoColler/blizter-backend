@@ -3,7 +3,7 @@ import { IQuerySalary, ISalary, ISalaryUpdate } from '../interfaces/salaryInterf
 import * as model from '../models/salaryModel';
 
 export async function create(salary: ISalary) {
-  const isSalaryExistent = await model.read(salary);
+  const [isSalaryExistent] = await model.read(salary);
 
   if (isSalaryExistent) throw conflictError('Salary already exists.');
 
