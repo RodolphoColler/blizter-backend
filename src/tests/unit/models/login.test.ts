@@ -2,7 +2,7 @@
 import * as sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp = require('chai-http');
-import * as model from '../../../models/loginModel';
+import * as model from '../../../models/signInModel';
 import * as data from '../../testData/loginData';
 import { prisma } from '../../../models/prisma';
 

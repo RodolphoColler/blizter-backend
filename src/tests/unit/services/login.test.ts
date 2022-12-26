@@ -3,8 +3,8 @@ import * as sinon from 'sinon';
 import chai from 'chai';
 import chaiHttp = require('chai-http');
 import bcrypt from 'bcryptjs';
-import * as service from '../../../services/loginService';
-import * as model from '../../../models/loginModel';
+import * as service from '../../../services/signInService';
+import * as model from '../../../models/signInModel';
 import * as data from '../../testData/loginData';
 
 chai.use(chaiHttp);
