@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsConfig = {
-  origin: 'https://blizter-frontend-production.up.railway.app',
+  origin: ['https://blizter-frontend-production.up.railway.app', 'http://localhost:3000'],
   credentials: true,
 };
 
