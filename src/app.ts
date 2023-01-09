@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsConfig = {
-  origin: '*',
+  origin: 'https://blizter.vercel.app',
   credentials: true,
 };
 
