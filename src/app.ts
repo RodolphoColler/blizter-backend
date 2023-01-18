@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsConfig = {
-  origin: ['https://blizter-frontend-production.up.railway.app/', 'https://blizter-git-railway-deploy-rodolphocoller.vercel.app/', 'http://localhost:3000', 'https://blizter.vercel.app/'],
+  origin: ['https://blizter-frontend-production.up.railway.app/', 'https://blizter-git-railway-deploy-rodolphocoller.vercel.app/', 'http://localhost:3000', 'https://blizter.vercel.app'],
   credentials: true,
 };
 
