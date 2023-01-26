@@ -23,8 +23,6 @@ export async function validate({ email, password }: ILogin) {
 export async function socialValidate(email: string) {
   const user = await model.readOne(email);
 
-  console.log(user);
-
   if (!user || user.password) throw unauthorizedError('Incorrect email or password.');
 
   const token = jwtToken(user.id);
