@@ -7,7 +7,7 @@ export async function create(req: Request, res: Response, next: NextFunction) {
 
     const token = await service.create({ email, password, name });
 
-    return res.status(204).cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).end();
+    return res.status(201).json({ token });
   } catch (error) {
     return next(error);
   }
@@ -19,7 +19,7 @@ export async function createSocial(req: Request, res: Response, next: NextFuncti
 
     const token = await service.createSocial({ email, name });
 
-    return res.status(204).cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).end();
+    return res.status(201).json({ token });
   } catch (error) {
     return next(error);
   }
