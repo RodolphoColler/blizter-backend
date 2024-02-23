@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 const corsConfig = {
-  origin: '*',
+  origin: 'https://blizter.vercel.app',
   credentials: true,
 };
 
