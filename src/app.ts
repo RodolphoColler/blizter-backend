@@ -11,7 +11,9 @@ const app = express();
 app.use(express.json());
 
 const corsConfig = {
-  origin: '*'
+  origin: '*',
+  methods: ['GET','POST','DELETE','OPTIONS','PUT','PATCH'],
+  exposedHeaders: '*'
 };
 
 app.use(cors());
