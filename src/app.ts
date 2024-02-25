@@ -10,9 +10,9 @@ const app = express();
 
 app.use(express.json());
 
-const corsConfig = {
-  origin: '*',
-};
+// const corsConfig = {
+//  origin: '*'
+// };
 
 app.use(cors(corsConfig));
 
