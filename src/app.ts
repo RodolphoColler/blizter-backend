@@ -14,7 +14,7 @@ app.use(express.json());
 //  origin: '*'
 // };
 
-app.use(cors(corsConfig));
+app.use(cors());
 
 app.use('/expenditure', router.expenditure);
 app.use('/category', router.category);
