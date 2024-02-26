@@ -16,7 +16,7 @@ const corsConfig = {
   exposedHeaders: '*'
 };
 
-app.use(cors());
+app.use(cors(corsConfig));
 
 app.use('/expenditure', router.expenditure);
 app.use('/category', router.category);
