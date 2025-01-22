@@ -1,0 +1,43 @@
+{
+  "name": "railway-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\"",
+    "prestart": "npx tsc",
+    "start": "node ./dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RodolphoColler/railway-back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/RodolphoColler/railway-back/issues"
+  },
+  "homepage": "https://github.com/RodolphoColler/railway-back#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "5.41.0",
+    "@typescript-eslint/parser": "5.41.0",
+    "eslint": "8.26.0",
+    "eslint-config-airbnb-typescript": "17.0.0",
+    "eslint-config-trybe-backend": "2.1.0",
+    "eslint-plugin-import": "2.26.0",
+    "ts-node": "^10.9.2",
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "dotenv": "^16.4.7",
+    "cors": "^2.8.5"
+  }
+}
