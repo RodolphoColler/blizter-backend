@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\"",
-    "prestart": "npx tsc",
+    "prestart": "npx tsc && npx prisma generate",
     "start": "node ./dist/server.js"
   },
   "repository": {
