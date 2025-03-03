@@ -1,6 +1,7 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import * as router from './routes';
 
 dotenv.config();
 
@@ -18,8 +19,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get('/', (_req: Request, res: Response) => {
-  res.json({ message: 'Working now' });
-});
+app.use('/user', router.user);
 
 export default app;
